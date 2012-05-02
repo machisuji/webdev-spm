@@ -1,7 +1,7 @@
-function init() {
-  var paper = Raphael("canvas", 100, 100);
-  paper.rect(10, 10, 10, 10).attr({fill: '#e8e8e8'});
-  
+function Tetris(canvasName, width, height) {
+  var paper = Raphael(canvasName, width, height);
+  paper.rect(0, 0, width, height).attr({fill: '#e8e8e8'});
+  new TetrisLogic(new TetrisGraphic(paper, 10, 20));
 }
 
 
