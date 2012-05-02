@@ -3,5 +3,8 @@
 In Console
 ----------
 * crtl+l
-* tab suggestions
+* tab suggestions/autocomplete
 * execute refresh after certain commands (git pull, rm, ...)
+* colors (git config color.status auto)
+* close console when click into text
+* reconfigurable shortcuts (alt+space instead of Shift+ESC for instance)
