@@ -3,18 +3,15 @@ function TetrisGraphic(canvas, xCount, yCount) {
   this.canvas = canvas;
   this.playground = new Playground(canvas, xCount, yCount);
 
-  var blocks = [new Block(0, 5, 7)];
-
-
-  this.render = function(playground, blocks) {
+  this.render = function(blocks) {
+    var self = this;
     _.each(blocks, function(block) {
-      playground.getPoint(block.x, block.y).attr({fill: '#ff0000'});
+      self.playground.getPoint(block.x, block.y).attr({fill: '#ff0000'});
     });
   }
 
-  this.render(this.playground, blocks);
-
-
+  var blocks = [new Block(0, 5, 7)];
+  this.render(blocks);
 }
 
 /*
@@ -34,19 +31,18 @@ function Playground(canvas, xCount, yCount) {
   this.canvas = canvas;
   this.xCount = xCount;
   this.yCount = yCount;
+  this.points = new Array(xCount);
+
   var pWidth = canvas.width / xCount;
   var pHeight = canvas.height / yCount;
-  var points = new Array(xCount);
+  var self = this;
 
-
-  _.each(_.range(xCount), function(x) {
-      points[x] = new Array(yCount);
-      _.each(_.range(yCount), function(y) {
-        points[x][y] = canvas.rect(x * pWidth, y * pHeight, pWidth, pHeight);
+  _.each(_.range(self.xCount), function(x) {
+      self.points[x] = new Array(self.yCount);
+      _.each(_.range(self.yCount), function(y) {
+        self.points[x][y] = self.canvas.rect(x * pWidth, y * pHeight, pWidth, pHeight);
       });
   });
-
-  this.points = points;
 
   this.getPoint = function(x, y) {
     return this.points[x][y];
