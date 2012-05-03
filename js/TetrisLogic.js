@@ -1,4 +1,4 @@
-var Empty = new Object();
+var Empty = {}
 
 function TetrisLogic(graphic) {
   this.graphic = graphic;
@@ -24,9 +24,8 @@ function Grid(width, height) {
 }
 
 function Piece(neighbours) {
-  if (neighbours === undefined) {
-    neighbours = {};
-  }
+  neighbours = neighbours || {};
+
   this.top = neighbours.top || Empty;
   this.right = neighbours.right || Empty;
   this.bottom = neighbours.bottom || Empty;
@@ -45,97 +44,89 @@ function Piece(neighbours) {
   };
 
   this.topMost = function() {
-    return this.outmost(function(piece) { return piece.top });
+    return this.outmost(function(piece) { return piece.top; });
   };
 
   this.rightMost = function() {
-    return this.outmost(function(piece) { return piece.right });
+    return this.outmost(function(piece) { return piece.right; });
   };
 
   this.bottomMost = function() {
-    return this.outmost(function(piece) { return piece.bottom });
+    return this.outmost(function(piece) { return piece.bottom; });
   };
 
   this.leftMost = function() {
-    return this.outmost(function(piece) { return piece.left });
+    return this.outmost(function(piece) { return piece.left; });
   };
 }
 
-window.Pieces = {
-  createBar: function(length, orientation, piece, i) {
-    if (length === undefined) {
-      length = 4;
-    }
-    if (piece === undefined) {
-      piece = new Piece();
-    }
-    if (i === undefined) {
-      i = 1;
-    }
-    if (i == length) {
-      if (orientation === "horizontal") {
-        piece.angle = 90;
-      }
-      piece.rotate = function() {
-        if (piece.angle === 90 || piece.angle === 270) {
-          return Pieces.createBar(length, "vertical");
-        } else {
-          return Pieces.createBar(length, "horizontal");
-        }
-      };
-      return piece;
-    }
-    else {
-      if (orientation === "horizontal") {
-        piece.rightMost().right = new Piece();
-      } else {
-        piece.bottomMost().bottom = new Piece();
-      }
-      return Pieces.createBar(length, orientation, piece, i + 1);
-    }
-  },
+Piece.createBar = function createBar(length, orientation, piece, i) {
+  length = length || 4;
+  piece = piece || new Piece();
+  i = i || 1;
 
-  createTri: function() {
-    var piece = new Piece();
-
-    //  #
-    // ###
-    piece.top = new Piece();
-    piece.left = new Piece();
-    piece.right = new Piece();
-
+  if (i == length) {
+    if (orientation === "horizontal") {
+      piece.angle = 90;
+    }
     piece.rotate = function() {
-      var piece = new Piece();
-      if (piece.angle === 0) {
-        // #
-        // ##
-        // #
-        piece.top = new Piece();
-        piece.right = new Piece();
-        piece.bottom = new Piece();
-        piece.angle = 90;
-      } else if (piece.angle === 90) {
-        // ###
-        //  #
-        piece.left = new Piece();
-        piece.right = new Piece();
-        piece.bottom = new Piece();
-        piece.angle = 180;
-      } else if (piece.angle === 180) {
-        //  #
-        // ##
-        //  #
-        piece.top = new Piece();
-        piece.left = new Piece();
-        piece.bottom = new Piece();
-        piece.angle = 270;
-      } else if (piece.angle === 270) {
-        piece = new Pieces.createTri();
+      if (piece.angle === 90 || piece.angle === 270) {
+        return createBar(length, "vertical");
+      } else {
+        return createBar(length, "horizontal");
       }
+    };
+    return piece;
+  } else {
+    if (orientation === "horizontal") {
+      piece.rightMost().right = new Piece();
+    } else {
+      piece.bottomMost().bottom = new Piece();
+    }
+    return createBar(length, orientation, piece, i + 1);
+  }
+};
 
-      return piece;
+Piece.createTri = function createTri() {
+  var piece = new Piece();
+
+  //  #
+  // ###
+  piece.top = new Piece();
+  piece.left = new Piece();
+  piece.right = new Piece();
+
+  piece.rotate = function() {
+    var piece = new Piece();
+    if (piece.angle === 0) {
+      // #
+      // ##
+      // #
+      piece.top = new Piece();
+      piece.right = new Piece();
+      piece.bottom = new Piece();
+      piece.angle = 90;
+    } else if (piece.angle === 90) {
+      // ###
+      //  #
+      piece.left = new Piece();
+      piece.right = new Piece();
+      piece.bottom = new Piece();
+      piece.angle = 180;
+    } else if (piece.angle === 180) {
+      //  #
+      // ##
+      //  #
+      piece.top = new Piece();
+      piece.left = new Piece();
+      piece.bottom = new Piece();
+      piece.angle = 270;
+    } else if (piece.angle === 270) {
+      piece = createTri();
     }
 
     return piece;
-  }
-}
+  };
+
+  return piece;
+};
