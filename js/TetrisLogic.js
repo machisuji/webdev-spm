@@ -9,6 +9,12 @@ function TetrisLogic(graphic) {
   this.blocks = function() {
     return [];
   };
+  this.moveRight = function(){alert("Arrow Right");};
+  this.moveLeft = function(){alert("Arrow Left");};
+  this.moveDown = function(){alert("Arrow Down");};
+  this.setDown = function(){alert("Space");};
+  this.rotate = function(){alert("Arrow Up");};
+
 }
 
 function Grid(width, height) {

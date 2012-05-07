@@ -1,6 +1,7 @@
 function Tetris(canvasName) {
   var paper = Raphael(canvasName, 300, 600);
-  new TetrisLogic(new TetrisGraphic(paper, 10, 20));
+  new Controls(new TetrisLogic(new TetrisGraphic(paper, 10, 20)));
+
 }
 
 

@@ -1,5 +1,4 @@
 html, body {
-  background: url("../img/tetris_bg.jpg") no-repeat scroll 0 0 transparent;
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -9,7 +8,7 @@ html, body {
   background: #fff;
   float: left;
   height: 600px;
-  margin: 30px 0;
+  margin: 30px;
   opacity: 0.75;
   position: relative;
   width: 300px;
