@@ -11,3 +11,4 @@ In Console
 * colors (git config color.status auto)
 * close console when click into text
 * reconfigurable shortcuts (alt+space instead of Shift+ESC for instance)
+* no indication of when a command's console output ends (i.e. the is done)
