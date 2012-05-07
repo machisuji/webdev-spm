@@ -2,21 +2,21 @@ html, body {
   background: url("../img/tetris_bg.jpg") no-repeat scroll 0 0 transparent;
   height: 100%;
   margin: 0;
+  overflow: hidden;
 }
 
 #canvas, #preview {
-  background: #fff;
+  background: none repeat scroll 0 0 #FFFFFF;
   float: left;
   height: 600px;
-  margin: 30px 0;
   opacity: 0.75;
   position: relative;
   width: 300px;
 }
 
 #main {
-    margin: auto;
     height: 600px;
+    margin: 30px auto;
     width: 450px;
 }
 
