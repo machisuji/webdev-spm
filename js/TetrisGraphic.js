@@ -2,15 +2,21 @@
 function TetrisGraphic(canvas, xCount, yCount) {
   this.canvas = canvas;
   this.playground = new Playground(canvas, xCount, yCount);
+  this.colorMap = {0: "#f00", 1: "#0f0", 2: "#00f", 3: "#ff0", 4: "#f0f", 5: "#0ff", 6: "#000"};
 
   this.render = function(blocks) {
     var self = this;
     _.each(blocks, function(block) {
-      self.playground.getPoint(block.x, block.y).attr({fill: '#ff0000'});
+      self.playground.getPoint(block.x, block.y).attr({fill: self.colorMap[block.type]});
     });
   }
 
-  var blocks = [new Block(0, 5, 7)];
+  var blocks = [
+    new Block(2, 5, 7),
+    new Block(2, 6, 7),
+    new Block(2, 7, 7),
+    new Block(2, 8, 7)
+  ];
   this.render(blocks);
 }
 

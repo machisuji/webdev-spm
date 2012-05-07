@@ -1,5 +1,5 @@
-function Tetris(canvasName, width, height) {
-  var paper = Raphael(canvasName, width, height);
+function Tetris(canvasName) {
+  var paper = Raphael(canvasName, 300, 600);
   new TetrisLogic(new TetrisGraphic(paper, 10, 20));
 }
 

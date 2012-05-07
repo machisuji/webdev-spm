@@ -1,5 +1,27 @@
-#canvas {
-  width: 300px;
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#canvas, #preview {
+  background: #fff;
+  float: left;
   height: 600px;
-  background: #000;
+  margin: 90px;
+  opacity: 0.75;
+  position: relative;
+  width: 300px;
+}
+
+#main {
+    background: url("../img/tetris_bg.jpg") no-repeat scroll 0 0 transparent;
+    margin: auto;
+    height: 100%;
+    width: 1280px;
+}
+
+#preview {
+    height: 120px;
+    margin-left: -60px;
+    width: 120px;
 }
