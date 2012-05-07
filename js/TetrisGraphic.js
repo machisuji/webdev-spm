@@ -1,14 +1,22 @@
 //Raphael paper to act as playground, width and height in number of Blocks
 function TetrisGraphic(canvas, xCount, yCount) {
-  this.canvas = canvas;
-  this.playground = new Playground(canvas, xCount, yCount);
+  var self = this;
+  self.canvas = canvas;
+  self.playground = new Playground(canvas, xCount, yCount);
 
   this.render = function(blocks) {
-    var self = this;
+    self.clear();
     _.each(blocks, function(block) {
       self.playground.getPoint(block.x, block.y).attr({fill: '#ff0000'});
     });
-  }
+  };
+  this.clear = function() {
+    _.each(self.playground.points, function(row) {
+      _.each(row, function(point) {
+        point.attr({fill: '#ffffff'});
+      });
+    });
+  };
 
   var blocks = [new Block(0, 5, 7)];
   this.render(blocks);
@@ -46,5 +54,5 @@ function Playground(canvas, xCount, yCount) {
 
   this.getPoint = function(x, y) {
     return this.points[x][y];
-  }
+  };
 }
