@@ -1,4 +1,7 @@
 
+JavaScript
+----------
+* (client side) debug support
 
 In Console
 ----------

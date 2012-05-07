@@ -3,13 +3,21 @@ function TetrisGraphic(canvas, xCount, yCount) {
   this.canvas = canvas;
   this.playground = new Playground(canvas, xCount, yCount);
   this.colorMap = {0: "#f00", 1: "#0f0", 2: "#00f", 3: "#ff0", 4: "#f0f", 5: "#0ff", 6: "#000"};
+  var self = this;
 
   this.render = function(blocks) {
-    var self = this;
+    self.clear();
     _.each(blocks, function(block) {
       self.playground.getPoint(block.x, block.y).attr({fill: self.colorMap[block.type]});
     });
-  }
+  };
+  this.clear = function() {
+    _.each(self.playground.points, function(row) {
+      _.each(row, function(point) {
+        point.attr({fill: '#ffffff'});
+      });
+    });
+  };
 
   var blocks = [
     new Block(2, 5, 7),
@@ -52,5 +60,5 @@ function Playground(canvas, xCount, yCount) {
 
   this.getPoint = function(x, y) {
     return this.points[x][y];
-  }
+  };
 }
