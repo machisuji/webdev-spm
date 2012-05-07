@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   margin: 0;
+  overflow: hidden;
 }
 
 #canvas, #preview {
@@ -15,9 +16,12 @@ html, body {
 
 #main {
     background: url("../img/tetris_bg.jpg") no-repeat scroll 0 0 transparent;
-    margin: auto;
     height: 100%;
-    width: 1280px;
+    left: 50%;
+    margin: -400px 0 0 -640px;
+    position: absolute;
+    top: 50%;
+    width: 100%;
 }
 
 #preview {
