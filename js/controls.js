@@ -2,36 +2,40 @@ function Controls(logic) {
   this.logic = logic;
   var self = this;
 
+  this.actions = {
+    setDown: {
+      codes: [32], // space
+      apply: function() { self.logic.setDown(); }
+    },
+    moveLeft: {
+      codes: [37, 97], // left arrow, A
+      apply: function() { self.logic.moveLeft(); }
+    },
+    moveRight: {
+      codes: [39, 100], // right arrow, D
+      apply: function() { self.logic.moveRight(); }
+    },
+    moveDown: {
+      codes: [40, 115], // arrow down, S
+      apply: function() { self.logic.moveDown(); }
+    },
+    rotate: {
+      codes: [38, 119], // arrow up, W
+      apply: function() { self.logic.rotate(); }
+    }
+  };
+
   $(document).ready(function() {
    document.onkeypress = function(e){
-    var e=window.event || e;
+    var e = window.event || e;
     var key = e.charCode === 0 ? e.keyCode : e.charCode;
 
-    switch(key) {
-      case 32: //Space
+    var action = _.find(self.actions, function(a) {
+      return _.include(a.codes, key);
+    });
+    if (action) {
       e.preventDefault();
-      self.logic.setDown();
-      break;
-
-      case 37: //Arrow left
-      e.preventDefault();
-      self.logic.moveLeft();
-      break;
-
-      case 38: //Arrow up
-      e.preventDefault();
-      self.logic.rotate();
-      break;
-
-      case 39: //Arrow right
-      e.preventDefault();
-      self.logic.moveRight();
-      break;
-
-      case 40: //Arrow down
-      e.preventDefault();
-      self.logic.moveDown();
-      break;
+      action.apply();
     }
    };
   });
