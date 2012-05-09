@@ -10,11 +10,27 @@ function TetrisLogic(width, height) {
     return self.grid.listBlocks();
   };
 
-  this.moveRight = function(){alert("Arrow Right");};
-  this.moveLeft = function(){alert("Arrow Left");};
-  this.moveDown = function(){alert("Arrow Down");};
+  this.moveRight = function() { self.move(1, 0) };
+  this.moveLeft = function() { self.move(-1, 0) };
+  this.moveDown = function() { self.move(0, 1) };
   this.setDown = function(){alert("Space");};
-  this.rotate = function(){alert("Arrow Up");};
+  this.rotate = function() {
+    if (self.activePiece) {
+      self.activePiece = self.activePiece.rotate();
+    }
+  };
+
+  this.move = function move(dx, dy) {
+    if (self.activePiece) {
+      if (!self.collision(self.activePiece, dx, dy)) {
+        self.activePiece.x += dx;
+        self.activePiece.y += dy;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
 
   this.state = function state() {
     var ret = {blocks: self.blocks()};
@@ -30,30 +46,28 @@ function TetrisLogic(width, height) {
 
   this.nextRound = function nextRound() {
     if (!self.activePiece) return true;
-    else if (!self.checkState()) return false;
+    else if (self.isGameOver()) return false;
 
-    self.activePiece.y += 1;
-    if (self.activePiece.yMax() > height - 1 ||
-        self.collision(self.activePiece)) {
-
-      self.activePiece.y -= 1;
+    if (self.activePiece.yMax() >= height - 1 ||
+        self.collision(self.activePiece, 0, 1, true)) {
 
       var blocks = self.activePiece.blocks();
       _.each(blocks, function(block) { // Blöcke liegen lassen
         self.grid.blocks[block.x][block.y] = {type: block.type};
       });
       self.spawn(Piece.createTri());
+    } else {
+      self.activePiece.y += 1;
     }
     return true;
   };
 
-  this.checkState = function checkState() {
-    if (!self.activePiece) {
-      if (self.activePiece.yMin() == 0 && self.collision(self.activePiece)) {
-        return false;
-      }
+  this.isGameOver = function checkState() {
+    if (self.activePiece) {
+      return self.activePiece.yMin() == 0 && self.collision(self.activePiece);
+    } else {
+      return false;
     }
-    return true;
   };
 
   this.spawn = function spawn(piece) {
@@ -62,9 +76,18 @@ function TetrisLogic(width, height) {
     piece.y = Math.max(0, 0 - piece.yMin());
   };
 
-  this.collision = function collision(piece) {
-    return _.any(piece.blocks(), function(block) {
-      return self.grid.blocks[block.x][block.y] !== Empty
+  this.collision = function collision(piece, dx, dy, blocksOnly) {
+    dx = dx || 0;
+    dy = dy || 0;
+    blocksOnly = blocksOnly || false;
+    return _.any(piece.blocks(piece.x + dx, piece.y + dy), function(block) {
+      if (block.x >= 0 && block.x < self.grid.width &&
+          block.y >= 0 && block.y < self.grid.height) {
+        return self.grid.blocks[block.x][block.y] !== Empty
+      } else {
+        console.log("out of bounds");
+        return !blocksOnly;
+      }
     });
   };
 }
