@@ -14,7 +14,7 @@ function Tetris(canvasName, previewName) {
     }
   };
   setTimeout(function() {
-      self.logic.spawn(Piece.createTri());
+      self.logic.spawn(Piece.createRandom());
       self.graphics.renderState(self.logic.state());
       setTimeout(mainLoop, 1000);
     }, 2000);
