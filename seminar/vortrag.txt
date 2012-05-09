@@ -1,0 +1,16 @@
+Zum Vortrag
+-----------
+
+Was möchter er hören?
+
+  - wie Anwendung gebaut?
+  - positives/negatives zur C9
+  - hinführen zum zweiten Teil (Werkzeug, dass wir bauen werden)
+    - wo Problem derzeit
+    - wo man neues Werkzeug gebrauchen kann
+  - was haben wir gelernt?
+  - Motivation der Erweiterung
+  - Idee vorstellen, wenn es schon eine gibt
+  - 15 Minuten
+
+  Termin: 5. Mai 2012

@@ -8,17 +8,13 @@ function Block(type, x, y) {
   this.x = x;
   this.y = y;
   this.type = type;
-  this.upper = null;
-  this.left = null;
-  this.lower = null;
-  this.right = null;
 }
 
 function TetrisState(blocks, active, preview, clearedLines, clearedLinesTotal, score) {
-  this.blocks = blocks;
-  this.active = active;
-  this.preview = preview;
-  this.clearedLines = clearedLines;
-  this.clearedLinesTotal = clearedLinesTotal;
-  this.score = score;
+  this.blocks = blocks; //fallen blocks (array of blocks)
+  this.active = active; //currently falling piece (array of blocks)
+  this.preview = preview; //next piece to come (array of blocks)
+  this.clearedLines = clearedLines; //y-indeces of cleared lines since last state update (array of int)
+  this.clearedLinesTotal = clearedLinesTotal; //number of totally cleared lines (int)
+  this.score = score; //score (int)
 }
