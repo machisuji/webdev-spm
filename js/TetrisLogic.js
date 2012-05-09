@@ -10,11 +10,27 @@ function TetrisLogic(width, height) {
     return self.grid.listBlocks();
   };
 
-  this.moveRight = function(){alert("Arrow Right");};
-  this.moveLeft = function(){alert("Arrow Left");};
-  this.moveDown = function(){alert("Arrow Down");};
+  this.moveRight = function() { self.move(1, 0) };
+  this.moveLeft = function() { self.move(-1, 0) };
+  this.moveDown = function() { self.move(0, 1) };
   this.setDown = function(){alert("Space");};
-  this.rotate = function(){alert("Arrow Up");};
+  this.rotate = function() {
+    if (self.activePiece) {
+      self.activePiece = self.activePiece.rotate();
+    }
+  };
+
+  this.move = function move(dx, dy) {
+    if (self.activePiece) {
+      if (!self.collision(self.activePiece, dx, dy)) {
+        self.activePiece.x += dx;
+        self.activePiece.y += dy;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
 
   this.state = function state() {
     var ret = {blocks: self.blocks()};
@@ -30,35 +46,48 @@ function TetrisLogic(width, height) {
 
   this.nextRound = function nextRound() {
     if (!self.activePiece) return true;
-    else if (!self.checkState()) return false;
+    else if (self.isGameOver()) return false;
 
-    if (self.activePiece.yMax() > height - 1 ||
-        self.collision(self.activePiece)) { // block bleibt liegen
-      self.spawn(Piece.createBar());
+    if (self.activePiece.yMax() >= height - 1 ||
+        self.collision(self.activePiece, 0, 1, true)) {
+
+      var blocks = self.activePiece.blocks();
+      _.each(blocks, function(block) { // Blöcke liegen lassen
+        self.grid.blocks[block.x][block.y] = {type: block.type};
+      });
+      self.spawn(Piece.createTri());
     } else {
       self.activePiece.y += 1;
     }
     return true;
   };
 
-  this.checkState = function checkState() {
-    if (!self.activePiece) {
-      if (self.activePiece.y == 0 && self.collision(self.activePiece)) {
-        return false;
-      }
+  this.isGameOver = function checkState() {
+    if (self.activePiece) {
+      return self.activePiece.yMin() == 0 && self.collision(self.activePiece);
+    } else {
+      return false;
     }
-    return true;
   };
 
   this.spawn = function spawn(piece) {
     self.activePiece = piece;
     piece.x = width / 2;
-    piece.y = 0;
+    piece.y = Math.max(0, 0 - piece.yMin());
   };
 
-  this.collision = function collision(piece) {
-    return _.any(piece.blocks(), function(block) {
-      return self.grid.blocks[block.x][block.y] !== Empty
+  this.collision = function collision(piece, dx, dy, blocksOnly) {
+    dx = dx || 0;
+    dy = dy || 0;
+    blocksOnly = blocksOnly || false;
+    return _.any(piece.blocks(piece.x + dx, piece.y + dy), function(block) {
+      if (block.x >= 0 && block.x < self.grid.width &&
+          block.y >= 0 && block.y < self.grid.height) {
+        return self.grid.blocks[block.x][block.y] !== Empty
+      } else {
+        console.log("out of bounds");
+        return !blocksOnly;
+      }
     });
   };
 }
@@ -97,14 +126,20 @@ function Piece(attr) {
   this.right = attr.right || Empty;
   this.bottom = attr.bottom || Empty;
   this.left = attr.left || Empty;
-  this.angle = 0; // pieces are rotated clockwise by 90 degrees
+  this.angle = attr.angle || 0; // pieces are rotated clockwise by 90 degrees
   this.type = attr.type;
+  this.x = attr.x;
+  this.y = attr.y;
 
   var self = this;
 
   this.blocks = function blocks(rx, ry) {
-    rx = rx || self.x || 0;
-    ry = ry || self.y || 0;
+    if (rx !== 0) {
+      rx = rx || self.x || 0;
+    }
+    if (ry !== 0) {
+      ry = ry || self.y || 0;
+    }
 
     var neighbours = _.zip(
       [{x: 0, y: -1}, {x: 1, y: 0}, {x: 0, y: 1}, {x: -1, y: 0}],
@@ -200,11 +235,16 @@ Piece.createBar = function createBar(length, orientation, piece, i) {
       piece.angle = 90;
     }
     piece.rotate = function() {
+      var bar = undefined;
       if (piece.angle === 90 || piece.angle === 270) {
-        return createBar(length, "vertical");
+        bar = createBar(length, "vertical");
       } else {
-        return createBar(length, "horizontal");
+        bar = createBar(length, "horizontal");
       }
+      bar.x = piece.x;
+      bar.y = piece.y;
+
+      return bar;
     };
     piece.setType(0);
 
@@ -219,45 +259,44 @@ Piece.createBar = function createBar(length, orientation, piece, i) {
   }
 };
 
-Piece.createTri = function createTri() {
-  var piece = new Piece();
+Piece.createTri = function createTri(angle) {
+  var piece = new Piece({angle: angle || 0});
+  var alpha = piece.angle % 360;
 
-  //  #
-  // ###
-  piece.top = new Piece();
-  piece.left = new Piece();
-  piece.right = new Piece();
+  if (alpha === 90) {
+    // #
+    // ##
+    // #
+    piece.top = new Piece();
+    piece.right = new Piece();
+    piece.bottom = new Piece();
+  } else if (alpha === 180) {
+    // ###
+    //  #
+    piece.left = new Piece();
+    piece.right = new Piece();
+    piece.bottom = new Piece();
+  } else if (alpha === 270) {
+    //  #
+    // ##
+    //  #
+    piece.top = new Piece();
+    piece.left = new Piece();
+    piece.bottom = new Piece();
+  } else if (alpha === 0) {
+    //  #
+    // ###
+    piece.top = new Piece();
+    piece.left = new Piece();
+    piece.right = new Piece();
+  }
 
   piece.rotate = function() {
-    var piece = new Piece();
-    if (piece.angle === 0) {
-      // #
-      // ##
-      // #
-      piece.top = new Piece();
-      piece.right = new Piece();
-      piece.bottom = new Piece();
-      piece.angle = 90;
-    } else if (piece.angle === 90) {
-      // ###
-      //  #
-      piece.left = new Piece();
-      piece.right = new Piece();
-      piece.bottom = new Piece();
-      piece.angle = 180;
-    } else if (piece.angle === 180) {
-      //  #
-      // ##
-      //  #
-      piece.top = new Piece();
-      piece.left = new Piece();
-      piece.bottom = new Piece();
-      piece.angle = 270;
-    } else if (piece.angle === 270) {
-      piece = createTri();
-    }
+    var rotated = createTri(piece.angle + 90);
+    rotated.x = piece.x;
+    rotated.y = piece.y;
 
-    return piece;
+    return rotated;
   };
 
   piece.setType(1);
