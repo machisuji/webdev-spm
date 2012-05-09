@@ -132,8 +132,12 @@ function Piece(attr) {
   var self = this;
 
   this.blocks = function blocks(rx, ry) {
-    rx = rx || self.x || 0;
-    ry = ry || self.y || 0;
+    if (rx !== 0) {
+      rx = rx || self.x || 0;
+    }
+    if (ry !== 0) {
+      ry = ry || self.y || 0;
+    }
 
     var neighbours = _.zip(
       [{x: 0, y: -1}, {x: 1, y: 0}, {x: 0, y: 1}, {x: -1, y: 0}],
