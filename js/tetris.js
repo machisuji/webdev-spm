@@ -1,6 +1,21 @@
 
 function Tetris(canvasName, previewName) {
-  new Controls(new TetrisLogic(new TetrisGraphic(canvasName, 10, 20, previewName, 4, 4)));
+  this.logic = new TetrisLogic(10, 20);
+  this.graphics = new TetrisGraphic(canvasName, 10, 20, previewName, 4, 4);
+  this.controls = new Controls(this.logic);
+
+  var self = this;
+  var mainLoop = function mainLoop() {
+    if (self.logic.nextRound()) {
+      self.graphics.renderState(self.logic.state());
+      setTimeout(mainLoop, self.logic.interval);
+    } else {
+      alert("Game Over");
+    }
+  };
+  self.logic.spawn(Piece.createBar());
+  self.graphics.renderState(self.logic.state());
+  setTimeout(mainLoop, 2000);
 }
 
 //x,y are int positions, type is an int specifying the color of the block
