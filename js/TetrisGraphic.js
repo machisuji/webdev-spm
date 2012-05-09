@@ -11,7 +11,9 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
   this.render = function(state) {
     this.highlightLines(state.clearedLines);
     this.renderState(state);
-    this.renderScore(state.score);
+    this.renderPanel("score", state.score);
+    this.renderPanel("lines", state.clearedLinesTotal);
+    this.renderPanel("level", state.level);
   }
 
   this.renderState = function(state) {
@@ -58,30 +60,31 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     hightlightSet.animate(anim.repeat(3));
   }
 
-  this.renderScore = function(score) {
-    var str = score.toString();
-    var missingLeadingZeros = 4 - str.length;
+  this.renderPanel = function(name, val) {
+    var str = val.toString();
+    var container = $('#' + name);
+    var childrenCount = container.children().length - 1;
+    var missingLeadingZeros = childrenCount - str.length;
     _.each(_.range(missingLeadingZeros), function() {
         str = "0" + str;
     });
 
-    var child = $('#score').children().first();
-    for (var i in str) {
+    var child = container.children().first().next();
+    _.each(_.range(childrenCount), function(i) {
       var char = str[i];
-      //var newClass = this.newScoreClassName(char);
-
-      var newClassName = this.newScoreClassName(char);
-      var currentClassName = this.currentScoreClassName(child);
+      //var newClass = self.newPanelClassName(char);
+      var newClassName = self.newPanelClassName(char);
+      var currentClassName = self.currentPanelClassName(child);
 
       if (newClassName != currentClassName)
         child.switchClass(currentClassName, newClassName, 750, 'easeOutBounce');
 
       //child.removeClass("zero one two third four five six seven eight nine").addClass(newClass);
       child = child.next();
-    }
+    });
   }
 
-  this.newScoreClassName = function(num) {
+  this.newPanelClassName = function(num) {
     switch(num) {
       case "0": return "zero";
       case "1": return "one";
@@ -96,7 +99,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     }
   }
 
-  this.currentScoreClassName = function(e) {
+  this.currentPanelClassName = function(e) {
     if (e.hasClass("zero"))
       return "zero";
 
@@ -201,7 +204,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     [
 
     ],
-    [[18, 19]], 0, 567);
+    [[18, 19]], 12, 567, 2);
 
   this.render(state);
 
