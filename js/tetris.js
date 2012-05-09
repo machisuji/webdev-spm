@@ -34,4 +34,5 @@ function TetrisState(blocks, active, preview, clearedLines, clearedLinesTotal, s
   this.clearedLines = clearedLines; //intervals of y-indeces of cleared lines since last state update (array of array of int; with start and end value)
   this.clearedLinesTotal = clearedLinesTotal; //number of totally cleared lines (int)
   this.score = score; //score (int)
+  //this.level = level; //current level (int)
 }
