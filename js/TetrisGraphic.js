@@ -1,65 +1,61 @@
 //Raphael paper to act as playground, width and height in number of Blocks
 function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previewRows, previewColumns) {
+  this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue", 6: "img/orange.png"};
+  this.blockSet = undefined;
   this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue.png", 6: "img/orange.png"};
-  this.blockImgs = [];
   this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
   this.preview = new TetrisWindow(previewName, previewRows, previewColumns);
 
   var self = this;
 
   this.render = function(state) {
-    var num = 1;
-    for (i = 0; i < state.clearedLines.length; i++) {
-      if (i < state.clearedLines.length - 1 && state.clearedLines[i] + 1 == state.clearedLines[i + 1]) {
-        num++;
-        continue;
-      }
-
-      self.highlightLines(state.clearedLines[i - (num - 1)], num);
-      num = 1;
-    }
+    this.highlightLines(state.clearedLines);
+    this.renderState(state);
     this.renderScore(state.score);
-
   }
 
   this.renderState = function(state) {
+    self.canvas.canvas.setStart();
+
     self.clear();
 
     if (state.blocks != null) {
       this.renderBlocks(state.blocks);
     }
-
     if (state.active != null) {
       this.renderBlocks(state.active);
     }
-
     if (state.preview != null) {
       this.renderPreview(state.preview);
     }
 
+    self.blockSet = self.canvas.canvas.setFinish();
   };
 
   this.renderBlocks = function(blocks) {
     _.each(blocks, function(block) {
       var bbox = self.canvas.points[block.x][block.y].getBBox();
-      var img = self.canvas.canvas.image(self.colorMap[block.type], bbox.x+0.5, bbox.y+0.5, bbox.width-1, bbox.height-1);
-      self.blockImgs.push(img);
+      //self.blockSet = self.canvas.canvas.set();
+      self.canvas.canvas.image(self.colorMap[block.type], bbox.x+0.5, bbox.y+0.5, bbox.width-1, bbox.height-1);
+      //self.blockSet.push(img);
     });
   }
 
   this.renderPreview = function(blocks) {}
 
-  this.highlightLines = function(y, num) {
-    var startRect = this.canvas.getPoint(0, y).getBBox();
-    var endRect = this.canvas.getPoint(this.canvas.xCount - 1, y + num - 1).getBBox();
-    var rect = this.canvas.canvas.rect(startRect.x, startRect.y, endRect.x2, endRect.y2 - endRect.y).glow({fill: true, color: "#fff"});
+  this.highlightLines = function(lines) {
+    var hightlightSet = self.canvas.canvas.set();
 
-    var anim = Raphael.animation({opacity: 0.0}, 300, "linear", function() {
-      rect.remove();
-      self.renderState(state);
+    _.each(lines, function(interval){
+      var startRect = self.canvas.getPoint(0, interval[0]).getBBox();
+      var endRect   = self.canvas.getPoint(self.canvas.xCount - 1, interval[1]).getBBox();
+      hightlightSet.push(self.canvas.canvas.rect(startRect.x, startRect.y, endRect.x2 - startRect.x, endRect.y2 - startRect.y).glow({fill: true, color: "#fff"}));
+    })
+
+    var anim = Raphael.animation({opacity: 0.0}, 300, "linear", function(evt) {
+      hightlightSet.remove();
     });
-
-    rect.animate(anim.repeat(3));
+    hightlightSet.animate(anim.repeat(3));
   }
 
   this.renderScore = function(score) {
@@ -79,10 +75,10 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
   }
 
   this.clear = function() {
-    //clear blocks in img and preview
-    _.each(this.blockImgs, function(img){
-      img.remove();
-    });
+    //removes old blocks from canvas, preview
+    if(this.blockSet != undefined){
+      this.blockSet.remove();
+    }
   };
 
   var state = new TetrisState(
@@ -151,25 +147,11 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     [
 
     ],
-    [18, 19], 0, 567);
-
+    [[18, 19]], 0, 567);
 
   this.render(state);
 
 }
-
-/*
-function PlaygroundPoint(x, y, width, height) {
-  this.x = x;
-  this.y = y;
-  this.width = width;
-  this.height = height;
-
-  this.fill = function(color) {
-
-  }
-}
-*/
 
 function TetrisWindow(canvasName, xCount, yCount) {
   var canvasElement = $("#" + canvasName);
