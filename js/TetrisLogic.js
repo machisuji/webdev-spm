@@ -4,6 +4,7 @@ function TetrisLogic(width, height) {
   var self = this;
 
   this.grid = new Grid(width, height);
+  this.interval = 1000;
 
   this.blocks = function() {
     return self.grid.listBlocks();
@@ -28,19 +29,25 @@ function TetrisLogic(width, height) {
   };
 
   this.nextRound = function nextRound() {
-    if (!self.activePiece || !self.checkState()) return;
+    if (!self.activePiece) return true;
+    else if (!self.checkState()) return false;
 
-    self.activePiece.y += 1;
-    if (self.checkState()) {
-      // go on
-      return true;
-    } else return false;
+    if (self.activePiece.yMax() > height - 1 ||
+        self.collision(self.activePiece)) { // block bleibt liegen
+      self.spawn(Piece.createBar());
+    } else {
+      self.activePiece.y += 1;
+    }
+    return true;
   };
 
   this.checkState = function checkState() {
-    if (!self.activePiece && self.collision(self.activePiece)) {
-      return false;
-    } else return true;
+    if (!self.activePiece) {
+      if (self.activePiece.y == 0 && self.collision(self.activePiece)) {
+        return false;
+      }
+    }
+    return true;
   };
 
   this.spawn = function spawn(piece) {
@@ -92,7 +99,6 @@ function Piece(attr) {
   this.left = attr.left || Empty;
   this.angle = 0; // pieces are rotated clockwise by 90 degrees
   this.type = attr.type;
-  this.interval = 1000;
 
   var self = this;
 
@@ -131,6 +137,22 @@ function Piece(attr) {
 
   this.height = function height() {
     return self.dimension(function(block) { return block.x });
+  };
+
+  this.xMin = function xMin() {
+    return _.min(self.blocks(), function(block) { return block.x }).x;
+  };
+
+  this.xMax = function xMin() {
+    return _.max(self.blocks(), function(block) { return block.x }).x;
+  };
+
+  this.yMin = function xMin() {
+    return _.min(self.blocks(), function(block) { return block.y }).y;
+  };
+
+  this.yMax = function xMin() {
+    return _.max(self.blocks(), function(block) { return block.y }).y;
   };
 
   this.setType = function setType(type) {
