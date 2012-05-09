@@ -55,7 +55,7 @@ function TetrisLogic(width, height) {
       _.each(blocks, function(block) { // Blöcke liegen lassen
         self.grid.blocks[block.x][block.y] = {type: block.type};
       });
-      self.spawn(Piece.createTri());
+      self.spawn(Piece.createRandom());
     } else {
       self.activePiece.y += 1;
     }
@@ -225,6 +225,13 @@ function Piece(attr) {
   };
 }
 
+Piece.createRandom = function createRandom() {
+  var shapes = [Piece.createBar, Piece.createTri, Piece.createBlock,
+                Piece.createL, Piece.createZ];
+  var index = Math.floor(Math.random() * shapes.length);
+  return shapes[index]();
+}
+
 Piece.createBar = function createBar(length, orientation, piece, i) {
   length = length || 4;
   piece = piece || new Piece();
@@ -234,7 +241,7 @@ Piece.createBar = function createBar(length, orientation, piece, i) {
     if (orientation === "horizontal") {
       piece.angle = 90;
     }
-    piece.rotate = function() {
+    piece.rotate = function rotate() {
       var bar = undefined;
       if (piece.angle === 90 || piece.angle === 270) {
         bar = createBar(length, "vertical");
@@ -291,7 +298,7 @@ Piece.createTri = function createTri(angle) {
     piece.right = new Piece();
   }
 
-  piece.rotate = function() {
+  piece.rotate = function rotate() {
     var rotated = createTri(piece.angle + 90);
     rotated.x = piece.x;
     rotated.y = piece.y;
@@ -303,3 +310,85 @@ Piece.createTri = function createTri(angle) {
 
   return piece;
 };
+
+Piece.createBlock = function createBlock() {
+  var piece = new Piece();
+  piece.right = new Piece();
+  piece.right.bottom = new Piece();
+  piece.bottom = new Piece();
+
+  piece.rotate = function rotate() {
+    return piece;
+  };
+  piece.setType(2);
+
+  return piece;
+};
+
+Piece.createL = function createL(angle) {
+  var l = new Piece({angle: angle || 0});
+  var alpha = l.angle % 360;
+
+  if (alpha == 0) {
+    l.bottom = new Piece();
+    l.bottom.bottom = new Piece();
+    l.bottom.bottom.right = new Piece();
+  } else if (alpha == 90) {
+    l.bottom = new Piece();
+    l.right = new Piece();
+    l.right.right = new Piece();
+  } else if (alpha == 180) {
+    l.left = new Piece();
+    l.bottom = new Piece();
+    l.bottom.bottom = new Piece();
+  } else if (alpha == 270) {
+    l.right = new Piece();
+    l.right.right = new Piece();
+    l.right.right.top = new Piece();
+  }
+
+  l.rotate = function rotate() {
+    var rotated = createL(l.angle + 90);
+    rotated.x = l.x;
+    rotated.y = l.y;
+
+    return rotated;
+  };
+  l.setType(3);
+
+  return l;
+};
+
+Piece.createZ = function createZ(angle) {
+  var z = new Piece({angle: angle || 0});
+  var alpha = z.angle % 360;
+
+  if (alpha == 0) {
+    z.left = new Piece();
+    z.top = new Piece();
+    z.top.right = new Piece();
+  } else if (alpha == 90) {
+    z.top = new Piece();
+    z.right = new Piece(),
+    z.right.bottom = new Piece();
+  } else if (alpha == 180) {
+    z.right = new Piece();
+    z.bottom = new Piece();
+    z.bottom.left = new Piece();
+  } else if (alpha == 270) {
+    z.top = new Piece();
+    z.left = new Piece();
+    z.left.bottom = new Piece();
+  }
+
+  z.rotate = function rotate() {
+    var rotated = createZ(z.angle + 90);
+    rotated.x = z.x;
+    rotated.y = z.y;
+
+    return rotated;
+  };
+  z.setType(4);
+
+  return z;
+}
