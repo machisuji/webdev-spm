@@ -1,5 +1,5 @@
 html, body {
-  background: url("../img/tetris_bg.jpg") no-repeat scroll 0 0 transparent;
+  background: url("../img/tetris_bg.jpg") no-repeat scroll right bottom transparent;
   height: 100%;
   margin: 0;
   overflow: hidden;
