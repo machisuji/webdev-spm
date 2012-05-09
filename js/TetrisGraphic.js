@@ -17,6 +17,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
       self.highlightLines(state.clearedLines[i - (num - 1)], num);
       num = 1;
     }
+    this.renderScore(state.score);
 
   }
 
@@ -58,7 +59,21 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     rect.animate(anim.repeat(3));
   }
 
+  this.renderScore = function(score) {
+    var str = score.toString();
+    var missingLeadingZeros = 4 - str.length;
+    _.each(_.range(missingLeadingZeros), function() {
+        str = "0" + str;
+    });
 
+    var child = $('#score').children().first();
+    for (var i in str) {
+      var char = str[i];
+      var imgPath = "url('img/score/score_" + char + ".png'";
+      child.css("background", imgPath);
+      child = child.next();
+    }
+  }
 
   this.clear = function() {
     //clear canvas
@@ -142,7 +157,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     [
 
     ],
-    [18, 19], 0, 0);
+    [18, 19], 0, 567);
 
 
   this.render(state);

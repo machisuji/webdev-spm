@@ -1,27 +1,84 @@
 html, body {
-  background: url("../img/tetris_bg.jpg") no-repeat scroll right bottom transparent;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
+    background: url("../img/tetris_bg.jpg") no-repeat scroll right bottom transparent;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
 }
 
 #canvas, #preview {
-  background: none repeat scroll 0 0 #FFFFFF;
-  float: left;
-  height: 600px;
-  opacity: 0.75;
-  position: relative;
-  width: 300px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 600px;
+    opacity: 0.75;
+    position: absolute;
+    width: 300px;
 }
 
 #main {
     height: 600px;
     margin: 30px auto;
+    position: relative;
     width: 450px;
 }
 
 #preview {
     height: 120px;
-    margin-left: 30px;
+    left: 330px;
     width: 120px;
 }
+
+#score {
+    height: 42px;
+    left: 330px;
+    position: absolute;
+    top: 140px;
+    width: 144px;
+}
+
+.score {
+    border: 2px solid #00FFF6;
+    float: left;
+    height: 42px;
+    margin: 0 1px;
+    width: 30px;
+}
+
+.zero {
+  background: url("../img/score/score_0.png") repeat scroll 0 0 transparent;
+}
+
+.one {
+  background: url("../img/score/score_1.png") repeat scroll 0 0 transparent;
+}
+
+.two {
+  background: url("../img/score/score_2.png") repeat scroll 0 0 transparent;
+}
+
+.three {
+  background: url("../img/score/score_3.png") repeat scroll 0 0 transparent;
+}
+
+.four {
+  background: url("../img/score/score_4.png") repeat scroll 0 0 transparent;
+}
+
+.five {
+  background: url("../img/score/score_5.png") repeat scroll 0 0 transparent;
+}
+
+.six {
+  background: url("../img/score/score_6.png") repeat scroll 0 0 transparent;
+}
+
+.seven {
+  background: url("../img/score/score_7.png") repeat scroll 0 0 transparent;
+}
+
+.eight {
+  background: url("../img/score/score_8.png") repeat scroll 0 0 transparent;
+}
+
+.nine {
+  background: url("../img/score/score_9.png") repeat scroll 0 0 transparent;
+}
+
