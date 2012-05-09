@@ -1,8 +1,30 @@
 //Raphael paper to act as playground, width and height in number of Blocks
 function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previewRows, previewColumns) {
-  this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue", 6: "img/orange.png"};
   this.blockSet = undefined;
-  this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue.png", 6: "img/orange.png"};
+  this.colorMap =
+  {
+    "level_0": {
+      0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue.png", 6: "img/orange.png"
+    },
+    "level_1": {
+      0: "img/yellow.png", 1: "img/green.png", 2: "img/gray.png", 3: "img/purple.png", 4: "img/blue.png", 5: "img/orange.png", 6: "img/red.png"
+    },
+    "level_1": {
+      0: "img/green.png", 1: "img/gray.png", 2: "img/purple.png", 3: "img/blue.png", 4: "img/orange.png", 5: "img/red.png", 6: "img/yellow.png"
+    },
+    "level_2": {
+      0: "img/gray.png", 1: "img/purple.png", 2: "img/blue.png", 3: "img/orange.png", 4: "img/red.png", 5: "img/yellow.png", 6: "img/green.png"
+    },
+    "level_3": {
+      0: "img/purple.png", 1: "img/blue.png", 2: "img/orange.png", 3: "img/red.png", 4: "img/yellow.png", 5: "img/green.png", 6: "img/gray.png"
+    },
+    "level_4": {
+      0: "img/blue.png", 1: "img/orange.png", 2: "img/red.png", 3: "img/yellow.png", 4: "img/green.png", 5: "img/gray.png", 6: "img/purple.png"
+    },
+    "level_5": {
+      0: "img/orange.png", 1: "img/red.png", 2: "img/yellow.png", 3: "img/green.png", 4: "img/gray.png", 5: "img/purple.png", 6: "img/blue.png"
+    }
+  };
   this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
   this.preview = null;
   this.previewName = previewName;
@@ -17,7 +39,8 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     this.renderPanel("score", state.score);
     this.renderPanel("lines", state.clearedLinesTotal);
     this.renderPanel("level", state.level);
-    this.switchLevelTheme(state.level);
+    //this.switchLevelTheme(state.level);
+
   }
 
   this.renderState = function(state) {
@@ -42,7 +65,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     _.each(blocks, function(block) {
       var bbox = self.canvas.points[block.x][block.y].getBBox();
       //self.blockSet = self.canvas.canvas.set();
-      self.canvas.canvas.image(self.colorMap[block.type], bbox.x+0.5, bbox.y+0.5, bbox.width-1, bbox.height-1);
+      self.canvas.canvas.image(self.colorMap[self.currentTheme][block.type], bbox.x+0.5, bbox.y+0.5, bbox.width-1, bbox.height-1);
       //self.blockSet.push(img);
     });
   }
@@ -81,7 +104,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     _.each(blocks, function(b) {
       var x = (b.x - minX) * pWidth;
       var y = (b.y - minY) * pHeight;
-      self.preview.image(self.colorMap[b.type], x, y, pWidth, pHeight);
+      self.preview.image(self.colorMap[self.currentTheme][b.type], x, y, pWidth, pHeight);
     });
 
     var previewElement = $('#' + this.previewName + ' svg');
