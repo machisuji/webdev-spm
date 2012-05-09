@@ -37,8 +37,10 @@ function Controls(logic, graphics) {
     });
     if (action) {
       e.preventDefault();
-      self.graphics.renderState(self.logic.state());
       action.apply();
+      setTimeout(function() {
+          self.graphics.renderState(self.logic.state());
+        }, 0);
     }
    };
   });
