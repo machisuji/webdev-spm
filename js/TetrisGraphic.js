@@ -1,6 +1,7 @@
 //Raphael paper to act as playground, width and height in number of Blocks
 function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previewRows, previewColumns) {
-  this.colorMap = {0: "#f00", 1: "#0f0", 2: "#00f", 3: "#ff0", 4: "#f0f", 5: "#0ff", 6: "#000"};
+  this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue", 6: "img/orange.png"};
+  this.blockImgs = [];
   this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
   this.preview = new TetrisWindow(previewName, previewRows, previewColumns);
 
@@ -29,23 +30,16 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
 
   this.renderBlocks = function(blocks) {
     _.each(blocks, function(block) {
-      self.canvas.getPoint(block.x, block.y).attr({fill: self.colorMap[block.type]});
+      var bbox = self.canvas.points[block.x][block.y].getBBox();
+      var img = self.canvas.canvas.image(self.colorMap[block.type], bbox.x+0.5, bbox.y+0.5, bbox.width-1, bbox.height-1);
+      self.blockImgs.push(img);
     });
   }
 
   this.clear = function() {
-    //clear canvas
-    _.each(self.canvas.points, function(row) {
-      _.each(row, function(point) {
-        point.attr({fill: '#ffffff'});
-      });
-    });
-
-    //clear preview box
-    _.each(self.preview.points, function(row) {
-      _.each(row, function(point) {
-        point.attr({fill: '#ffffff'});
-      });
+    //clear blocks in img and preview
+    _.each(this.blockImgs, function(img){
+      img.remove();
     });
   };
 
@@ -137,7 +131,7 @@ function TetrisWindow(canvasName, xCount, yCount) {
   _.each(_.range(self.xCount), function(x) {
       self.points[x] = new Array(self.yCount);
       _.each(_.range(self.yCount), function(y) {
-        self.points[x][y] = self.canvas.rect(x * pWidth, y * pHeight, pWidth, pHeight);
+        self.points[x][y] = self.canvas.rect(x * pWidth, y * pHeight, pWidth, pHeight).attr({'fill-opacity': '0.75', 'fill': '#fff'});
       });
   });
 
