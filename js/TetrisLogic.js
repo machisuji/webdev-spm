@@ -126,8 +126,10 @@ function Piece(attr) {
   this.right = attr.right || Empty;
   this.bottom = attr.bottom || Empty;
   this.left = attr.left || Empty;
-  this.angle = 0; // pieces are rotated clockwise by 90 degrees
+  this.angle = attr.angle || 0; // pieces are rotated clockwise by 90 degrees
   this.type = attr.type;
+  this.x = attr.x;
+  this.y = attr.y;
 
   var self = this;
 
@@ -233,11 +235,16 @@ Piece.createBar = function createBar(length, orientation, piece, i) {
       piece.angle = 90;
     }
     piece.rotate = function() {
+      var bar = undefined;
       if (piece.angle === 90 || piece.angle === 270) {
-        return createBar(length, "vertical");
+        bar = createBar(length, "vertical");
       } else {
-        return createBar(length, "horizontal");
+        bar = createBar(length, "horizontal");
       }
+      bar.x = piece.x;
+      bar.y = piece.y;
+
+      return bar;
     };
     piece.setType(0);
 
@@ -252,45 +259,44 @@ Piece.createBar = function createBar(length, orientation, piece, i) {
   }
 };
 
-Piece.createTri = function createTri() {
-  var piece = new Piece();
+Piece.createTri = function createTri(angle) {
+  var piece = new Piece({angle: angle || 0});
+  var alpha = piece.angle % 360;
 
-  //  #
-  // ###
-  piece.top = new Piece();
-  piece.left = new Piece();
-  piece.right = new Piece();
+  if (alpha === 90) {
+    // #
+    // ##
+    // #
+    piece.top = new Piece();
+    piece.right = new Piece();
+    piece.bottom = new Piece();
+  } else if (alpha === 180) {
+    // ###
+    //  #
+    piece.left = new Piece();
+    piece.right = new Piece();
+    piece.bottom = new Piece();
+  } else if (alpha === 270) {
+    //  #
+    // ##
+    //  #
+    piece.top = new Piece();
+    piece.left = new Piece();
+    piece.bottom = new Piece();
+  } else if (alpha === 0) {
+    //  #
+    // ###
+    piece.top = new Piece();
+    piece.left = new Piece();
+    piece.right = new Piece();
+  }
 
   piece.rotate = function() {
-    var piece = new Piece();
-    if (piece.angle === 0) {
-      // #
-      // ##
-      // #
-      piece.top = new Piece();
-      piece.right = new Piece();
-      piece.bottom = new Piece();
-      piece.angle = 90;
-    } else if (piece.angle === 90) {
-      // ###
-      //  #
-      piece.left = new Piece();
-      piece.right = new Piece();
-      piece.bottom = new Piece();
-      piece.angle = 180;
-    } else if (piece.angle === 180) {
-      //  #
-      // ##
-      //  #
-      piece.top = new Piece();
-      piece.left = new Piece();
-      piece.bottom = new Piece();
-      piece.angle = 270;
-    } else if (piece.angle === 270) {
-      piece = createTri();
-    }
+    var rotated = createTri(piece.angle + 90);
+    rotated.x = piece.x;
+    rotated.y = piece.y;
 
-    return piece;
+    return rotated;
   };
 
   piece.setType(1);
