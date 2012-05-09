@@ -6,11 +6,7 @@ function TetrisLogic(width, height) {
   this.grid = new Grid(width, height);
 
   this.blocks = function() {
-    var blocks = self.grid.listBlocks();
-
-    if (self.activePiece) {
-      blocks.push(self.activePiece.blocks);
-    }
+    return self.grid.listBlocks();
   };
 
   this.moveRight = function(){alert("Arrow Right");};
@@ -18,6 +14,18 @@ function TetrisLogic(width, height) {
   this.moveDown = function(){alert("Arrow Down");};
   this.setDown = function(){alert("Space");};
   this.rotate = function(){alert("Arrow Up");};
+
+  this.state = function state() {
+    var ret = {blocks: self.blocks()};
+    if (self.activePiece) {
+      ret.active = self.activePiece.blocks();
+    }
+    if (self.nextPiece) {
+      ret.preview = self.nextPiece.blocks();
+    }
+
+    return ret;
+  };
 
   this.nextRound = function nextRound() {
     if (!self.activePiece || !self.checkState()) return;
@@ -31,7 +39,6 @@ function TetrisLogic(width, height) {
 
   this.checkState = function checkState() {
     if (!self.activePiece && self.collision(self.activePiece)) {
-      alert("Game Over");
       return false;
     } else return true;
   };
@@ -67,7 +74,9 @@ function Grid(width, height) {
     for (var x = 0; x < width; ++x) {
       for (var y = 0; y < height; ++y) {
         var block = self.blocks[x][y];
-        blocks.push({x: x, y: y, type: block.type});
+        if (block !== Empty) {
+          blocks.push({x: x, y: y, type: block.type});
+        }
       }
     }
     return blocks;
@@ -83,6 +92,7 @@ function Piece(attr) {
   this.left = attr.left || Empty;
   this.angle = 0; // pieces are rotated clockwise by 90 degrees
   this.type = attr.type;
+  this.interval = 1000;
 
   var self = this;
 
@@ -93,7 +103,7 @@ function Piece(attr) {
     var neighbours = _.zip(
       [{x: 0, y: -1}, {x: 1, y: 0}, {x: 0, y: 1}, {x: -1, y: 0}],
       [self.top,      self.right,   self.bottom,  self.left   ]);
-    var coords = _.map(neighbours, function(neighbour) {
+    var blocks = _.map(neighbours, function(neighbour) {
       var rc = neighbour[0];
       var piece = neighbour[1];
       if (piece !== Empty) {
@@ -102,9 +112,9 @@ function Piece(attr) {
         return [];
       }
     });
-    coords.splice(0, 0, [{x: rx, y: ry, type: self.type}]);
+    blocks.splice(0, 0, [{x: rx, y: ry, type: self.type}]);
 
-    return _.flatten(coords);
+    return _.flatten(blocks);
   };
 
   this.dimension = function width(criterion) {
