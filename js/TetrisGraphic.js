@@ -4,10 +4,12 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
   this.blockSet = undefined;
   this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue.png", 6: "img/orange.png"};
   this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
-  this.preview = new TetrisWindow(previewName, previewRows, previewColumns);
+  this.preview = null;
+  this.previewName = previewName;
   this.currentTheme = "level_0";
 
   var self = this;
+
 
   this.render = function(state) {
     this.highlightLines(state.clearedLines);
@@ -45,7 +47,49 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     });
   }
 
-  this.renderPreview = function(blocks) {}
+  this.renderPreview = function(blocks) {
+    if (this.preview != null) {
+      $('#' + this.previewName + ' svg').remove();
+    }
+
+    var minX;
+    var maxX;
+    var minY;
+    var maxY;
+
+    _.each(blocks, function(b) {
+      if (minX == null || b.x < minX)
+        minX = b.x;
+
+      if (maxX == null || b.x > maxX)
+        maxX = b.x;
+
+      if (minY == null || b.y < minY)
+        minY = b.y;
+
+      if (maxY == null || b.y > maxY)
+        maxY = b.y;
+    });
+    var width = maxX - minX + 1;
+    var height = maxY - minY + 1;
+    var pWidth = this.canvas.pWidth;
+    var pHeight = this.canvas.pHeight;
+
+    this.preview = Raphael(this.previewName, width * pWidth, height * pHeight);
+    var self = this;
+
+    _.each(blocks, function(b) {
+      var x = (b.x - minX) * pWidth;
+      var y = (b.y - minY) * pHeight;
+      self.preview.image(self.colorMap[b.type], x, y, pWidth, pHeight);
+    });
+
+    var previewElement = $('#' + this.previewName + ' svg');
+    var previewCssLeft = (previewElement.parent().width() - (width * pWidth)) / 2;
+    var previewCssTop = (previewElement.parent().height() - (height * pHeight)) / 2;
+
+    previewElement.css({"left": previewCssLeft.toString() + "px", "top": previewCssTop.toString() + "px"});
+  }
 
   this.highlightLines = function(lines) {
     var hightlightSet = self.canvas.canvas.set();
@@ -213,7 +257,10 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
 
     //preview
     [
-
+      new Block(5, 9, 16),
+      new Block(5, 9, 17),
+      new Block(5, 9, 18),
+      new Block(5, 9, 19),
     ],
     [[18, 19]], 12, 567, 3);
 
