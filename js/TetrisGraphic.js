@@ -1,6 +1,6 @@
 //Raphael paper to act as playground, width and height in number of Blocks
 function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previewRows, previewColumns) {
-  this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue", 6: "img/orange.png"};
+  this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue.png", 6: "img/orange.png"};
   this.blockImgs = [];
   this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
   this.preview = new TetrisWindow(previewName, previewRows, previewColumns);
