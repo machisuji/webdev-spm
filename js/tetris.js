@@ -2,7 +2,7 @@
 function Tetris(canvasName, previewName) {
   this.logic = new TetrisLogic(10, 20);
   this.graphics = new TetrisGraphic(canvasName, 10, 20, previewName, 4, 4);
-  this.controls = new Controls(this.logic);
+  this.controls = new Controls(this.logic, this.graphics);
 
   var self = this;
   var mainLoop = function mainLoop() {
