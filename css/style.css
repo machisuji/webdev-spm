@@ -1,5 +1,4 @@
 html, body {
-    background: url("../img/tetris_bg.jpg") no-repeat scroll right bottom transparent;
     height: 100%;
     margin: 0;
     overflow: hidden;
@@ -10,6 +9,11 @@ html, body {
     height: 600px;
     position: absolute;
     width: 300px;
+}
+
+.glow {
+    border: 2px solid #9ecaed;
+    box-shadow: 0 0 15px #9ecaed;
 }
 
 #canvas svg {
@@ -37,51 +41,66 @@ html, body {
     width: 144px;
 }
 
+#score_head {
+    background: url("../img/score/score.png");
+    height: 40px;
+    margin-bottom: 3px;
+    width: 144px;
+}
+
 .score {
-    border: 2px solid #00FFF6;
     float: left;
     height: 42px;
     margin: 0 1px;
     width: 30px;
 }
 
-.zero {
+
+/*
+Level Themes
+*/
+
+html.level_0, body.level_0 {
+  background: url("../img/tetris_bg.jpg") no-repeat scroll right bottom transparent;
+}
+
+.level_0 .zero {
   background: url("../img/score/score_0.png") repeat scroll 0 0 transparent;
 }
 
-.one {
+.level_0 .one {
   background: url("../img/score/score_1.png") repeat scroll 0 0 transparent;
 }
 
-.two {
+.level_0 .two {
   background: url("../img/score/score_2.png") repeat scroll 0 0 transparent;
 }
 
-.three {
+.level_0 .three {
   background: url("../img/score/score_3.png") repeat scroll 0 0 transparent;
 }
 
-.four {
+.level_0 .four {
   background: url("../img/score/score_4.png") repeat scroll 0 0 transparent;
 }
 
-.five {
+.level_0 .five {
   background: url("../img/score/score_5.png") repeat scroll 0 0 transparent;
 }
 
-.six {
+.level_0 .six {
   background: url("../img/score/score_6.png") repeat scroll 0 0 transparent;
 }
 
-.seven {
+.level_0 .seven {
   background: url("../img/score/score_7.png") repeat scroll 0 0 transparent;
 }
 
-.eight {
+.level_0 .eight {
   background: url("../img/score/score_8.png") repeat scroll 0 0 transparent;
 }
 
-.nine {
+.level_0 .nine {
   background: url("../img/score/score_9.png") repeat scroll 0 0 transparent;
 }
 

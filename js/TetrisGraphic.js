@@ -72,10 +72,64 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     var child = $('#score').children().first();
     for (var i in str) {
       var char = str[i];
-      var imgPath = "url('img/score/score_" + char + ".png'";
-      child.css("background", imgPath);
+      //var newClass = this.newScoreClassName(char);
+
+      var newClassName = this.newScoreClassName(char);
+      var currentClassName = this.currentScoreClassName(child);
+
+      if (newClassName != currentClassName)
+        child.switchClass(currentClassName, newClassName, 750, 'easeOutBounce');
+
+      //child.removeClass("zero one two third four five six seven eight nine").addClass(newClass);
       child = child.next();
     }
+  }
+
+  this.newScoreClassName = function(num) {
+    switch(num) {
+      case "0": return "zero";
+      case "1": return "one";
+      case "2": return "two";
+      case "3": return "three";
+      case "4": return "four";
+      case "5": return "five";
+      case "6": return "six";
+      case "7": return "seven";
+      case "8": return "eight";
+      case "9": return "nine";
+    }
+  }
+
+  this.currentScoreClassName = function(e) {
+    if (e.hasClass("zero"))
+      return "zero";
+
+    if (e.hasClass("one"))
+      return "one";
+
+    if (e.hasClass("two"))
+      return "two";
+
+    if (e.hasClass("three"))
+      return "three";
+
+    if (e.hasClass("four"))
+      return "four";
+
+    if (e.hasClass("five"))
+      return "five";
+
+    if (e.hasClass("six"))
+      return "six";
+
+    if (e.hasClass("seven"))
+      return "seven";
+
+    if (e.hasClass("eight"))
+      return "eight";
+
+    if (e.hasClass("nine"))
+      return "nine";
   }
 
   this.clear = function() {

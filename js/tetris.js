@@ -13,9 +13,9 @@ function Tetris(canvasName, previewName) {
       alert("Game Over");
     }
   };
-  self.logic.spawn(Piece.createBar());
-  self.graphics.renderState(self.logic.state());
-  setTimeout(mainLoop, 2000);
+  //self.logic.spawn(Piece.createBar());
+  //self.graphics.renderState(self.logic.state());
+  //setTimeout(mainLoop, 2000);
 }
 
 //x,y are int positions, type is an int specifying the color of the block
@@ -32,4 +32,5 @@ function TetrisState(blocks, active, preview, clearedLines, clearedLinesTotal, s
   this.clearedLines = clearedLines; //y-indeces of cleared lines since last state update (array of int)
   this.clearedLinesTotal = clearedLinesTotal; //number of totally cleared lines (int)
   this.score = score; //score (int)
+  //this.level = level; //current level (int)
 }
