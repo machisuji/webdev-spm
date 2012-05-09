@@ -5,6 +5,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
   this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue.png", 6: "img/orange.png"};
   this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
   this.preview = new TetrisWindow(previewName, previewRows, previewColumns);
+  this.currentTheme = "level_0";
 
   var self = this;
 
@@ -14,6 +15,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     this.renderPanel("score", state.score);
     this.renderPanel("lines", state.clearedLinesTotal);
     this.renderPanel("level", state.level);
+    this.switchLevelTheme(state.level);
   }
 
   this.renderState = function(state) {
@@ -77,7 +79,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
       var currentClassName = self.currentPanelClassName(child);
 
       if (newClassName != currentClassName)
-        child.switchClass(currentClassName, newClassName, 750, 'easeOutBounce');
+        child.switchClass(currentClassName, newClassName, 1000, 'easeOutBounce');
 
       //child.removeClass("zero one two third four five six seven eight nine").addClass(newClass);
       child = child.next();
@@ -137,6 +139,15 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
       this.blockSet.remove();
     }
   };
+
+  this.switchLevelTheme = function(level) {
+    var newTheme = "level_" + level.toString();
+    if (newTheme != this.currentTheme) {
+      $("." + this.currentTheme).switchClass(this.currentTheme, newTheme, 1000);
+
+      this.currentTheme = newTheme;
+    }
+  }
 
   var state = new TetrisState(
     //blocks
@@ -204,7 +215,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     [
 
     ],
-    [[18, 19]], 12, 567, 2);
+    [[18, 19]], 12, 567, 3);
 
   this.render(state);
 
