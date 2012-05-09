@@ -13,9 +13,11 @@ function Tetris(canvasName, previewName) {
       alert("Game Over");
     }
   };
-  self.logic.spawn(Piece.createBar());
-  self.graphics.renderState(self.logic.state());
-  setTimeout(mainLoop, 2000);
+  setTimeout(function() {
+      self.logic.spawn(Piece.createTri());
+      self.graphics.renderState(self.logic.state());
+      setTimeout(mainLoop, 1000);
+    }, 2000);
 }
 
 //x,y are int positions, type is an int specifying the color of the block

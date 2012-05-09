@@ -32,18 +32,24 @@ function TetrisLogic(width, height) {
     if (!self.activePiece) return true;
     else if (!self.checkState()) return false;
 
+    self.activePiece.y += 1;
     if (self.activePiece.yMax() > height - 1 ||
-        self.collision(self.activePiece)) { // block bleibt liegen
-      self.spawn(Piece.createBar());
-    } else {
-      self.activePiece.y += 1;
+        self.collision(self.activePiece)) {
+
+      self.activePiece.y -= 1;
+
+      var blocks = self.activePiece.blocks();
+      _.each(blocks, function(block) { // Blöcke liegen lassen
+        self.grid.blocks[block.x][block.y] = {type: block.type};
+      });
+      self.spawn(Piece.createTri());
     }
     return true;
   };
 
   this.checkState = function checkState() {
     if (!self.activePiece) {
-      if (self.activePiece.y == 0 && self.collision(self.activePiece)) {
+      if (self.activePiece.yMin() == 0 && self.collision(self.activePiece)) {
         return false;
       }
     }
@@ -53,7 +59,7 @@ function TetrisLogic(width, height) {
   this.spawn = function spawn(piece) {
     self.activePiece = piece;
     piece.x = width / 2;
-    piece.y = 0;
+    piece.y = Math.max(0, 0 - piece.yMin());
   };
 
   this.collision = function collision(piece) {

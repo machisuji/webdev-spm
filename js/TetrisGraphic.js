@@ -2,14 +2,16 @@
 function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previewRows, previewColumns) {
   this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue", 6: "img/orange.png"};
   this.blockSet = undefined;
+  this.colorMap = {0: "img/red.png", 1: "img/yellow.png", 2: "img/green.png", 3: "img/gray.png", 4: "img/purple.png", 5: "img/blue.png", 6: "img/orange.png"};
   this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
   this.preview = new TetrisWindow(previewName, previewRows, previewColumns);
 
   var self = this;
 
   this.render = function(state) {
-    self.highlightLines(state.clearedLines);
-    self.renderState(state);
+    this.highlightLines(state.clearedLines);
+    this.renderState(state);
+    this.renderScore(state.score);
   }
 
   this.renderState = function(state) {
@@ -54,6 +56,22 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
       hightlightSet.remove();
     });
     hightlightSet.animate(anim.repeat(3));
+  }
+
+  this.renderScore = function(score) {
+    var str = score.toString();
+    var missingLeadingZeros = 4 - str.length;
+    _.each(_.range(missingLeadingZeros), function() {
+        str = "0" + str;
+    });
+
+    var child = $('#score').children().first();
+    for (var i in str) {
+      var char = str[i];
+      var imgPath = "url('img/score/score_" + char + ".png'";
+      child.css("background", imgPath);
+      child = child.next();
+    }
   }
 
   this.clear = function() {
@@ -129,8 +147,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     [
 
     ],
-    [[18, 19]], 0, 0);
-
+    [[18, 19]], 0, 567);
 
   this.render(state);
 
