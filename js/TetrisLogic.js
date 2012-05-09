@@ -1,23 +1,64 @@
 var Empty = {}
 
-function TetrisLogic(graphic) {
-  this.graphic = graphic;
+function TetrisLogic(width, height) {
+  var self = this;
 
-  //implement this: create blocks to be rendered by TetrisGraphics
-  //this.graphic.render(blocks);
+  this.grid = new Grid(width, height);
 
   this.blocks = function() {
-    return [];
+    return self.grid.listBlocks();
   };
+
   this.moveRight = function(){alert("Arrow Right");};
   this.moveLeft = function(){alert("Arrow Left");};
   this.moveDown = function(){alert("Arrow Down");};
   this.setDown = function(){alert("Space");};
   this.rotate = function(){alert("Arrow Up");};
 
+  this.state = function state() {
+    var ret = {blocks: self.blocks()};
+    if (self.activePiece) {
+      ret.active = self.activePiece.blocks();
+    }
+    if (self.nextPiece) {
+      ret.preview = self.nextPiece.blocks();
+    }
+
+    return ret;
+  };
+
+  this.nextRound = function nextRound() {
+    if (!self.activePiece || !self.checkState()) return;
+
+    self.activePiece.y += 1;
+    if (self.checkState()) {
+      // go on
+      return true;
+    } else return false;
+  };
+
+  this.checkState = function checkState() {
+    if (!self.activePiece && self.collision(self.activePiece)) {
+      return false;
+    } else return true;
+  };
+
+  this.spawn = function spawn(piece) {
+    self.activePiece = piece;
+    piece.x = width / 2;
+    piece.y = 0;
+  };
+
+  this.collision = function collision(piece) {
+    return _.any(piece.blocks(), function(block) {
+      return self.grid.blocks[block.x][block.y] !== Empty
+    });
+  };
 }
 
 function Grid(width, height) {
+  var self = this;
+
   this.width = width;
   this.height = height;
   this.blocks = new Array(width);
@@ -27,18 +68,79 @@ function Grid(width, height) {
       this.blocks[x][y] = Empty;
     }
   }
+
+  this.listBlocks = function listBlocks() {
+    var blocks = [];
+    for (var x = 0; x < width; ++x) {
+      for (var y = 0; y < height; ++y) {
+        var block = self.blocks[x][y];
+        if (block !== Empty) {
+          blocks.push({x: x, y: y, type: block.type});
+        }
+      }
+    }
+    return blocks;
+  };
 }
 
-function Piece(neighbours) {
-  neighbours = neighbours || {};
+function Piece(attr) {
+  attr = attr || {};
 
-  this.top = neighbours.top || Empty;
-  this.right = neighbours.right || Empty;
-  this.bottom = neighbours.bottom || Empty;
-  this.left = neighbours.left || Empty;
+  this.top = attr.top || Empty;
+  this.right = attr.right || Empty;
+  this.bottom = attr.bottom || Empty;
+  this.left = attr.left || Empty;
   this.angle = 0; // pieces are rotated clockwise by 90 degrees
+  this.type = attr.type;
+  this.interval = 1000;
 
   var self = this;
+
+  this.blocks = function blocks(rx, ry) {
+    rx = rx || self.x || 0;
+    ry = ry || self.y || 0;
+
+    var neighbours = _.zip(
+      [{x: 0, y: -1}, {x: 1, y: 0}, {x: 0, y: 1}, {x: -1, y: 0}],
+      [self.top,      self.right,   self.bottom,  self.left   ]);
+    var blocks = _.map(neighbours, function(neighbour) {
+      var rc = neighbour[0];
+      var piece = neighbour[1];
+      if (piece !== Empty) {
+        return piece.blocks(rx + rc.x, ry + rc.y);
+      } else {
+        return [];
+      }
+    });
+    blocks.splice(0, 0, [{x: rx, y: ry, type: self.type}]);
+
+    return _.flatten(blocks);
+  };
+
+  this.dimension = function width(criterion) {
+    var blocks = self.blocks();
+    var min = _.min(blocks, criterion);
+    var max = _.max(blocks, criterion);
+
+    return Math.abs(max - min);
+  };
+
+  this.width = function width() {
+    return self.dimension(function(block) { return block.y });
+  };
+
+  this.height = function height() {
+    return self.dimension(function(block) { return block.x });
+  };
+
+  this.setType = function setType(type) {
+    self.type = type;
+    _.each([self.top, self.right, self.bottom, self.left], function(piece) {
+      if (piece !== Empty) {
+        piece.setType(type);
+      }
+    });
+  };
 
   this.outmost = function(next, current) {
     if (current === undefined) return self.outmost(next, self);
@@ -82,6 +184,8 @@ Piece.createBar = function createBar(length, orientation, piece, i) {
         return createBar(length, "horizontal");
       }
     };
+    piece.setType(0);
+
     return piece;
   } else {
     if (orientation === "horizontal") {
@@ -133,6 +237,8 @@ Piece.createTri = function createTri() {
 
     return piece;
   };
+
+  piece.setType(1);
 
   return piece;
 };
