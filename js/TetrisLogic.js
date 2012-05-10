@@ -5,6 +5,8 @@ function TetrisLogic(width, height) {
 
   this.grid = new Grid(width, height);
   this.interval = 1000;
+  this.level = 1;
+  this.score = 0;
 
   this.blocks = function() {
     return self.grid.listBlocks();
@@ -16,7 +18,10 @@ function TetrisLogic(width, height) {
   this.setDown = function(){alert("Space");};
   this.rotate = function() {
     if (self.activePiece) {
-      self.activePiece = self.activePiece.rotate();
+      var rotated = self.activePiece.rotate();
+      if (!self.collision(rotated)) {
+        self.activePiece = rotated;
+      }
     }
   };
 
@@ -33,7 +38,11 @@ function TetrisLogic(width, height) {
   }
 
   this.state = function state() {
-    var ret = {blocks: self.blocks()};
+    var ret = {
+      blocks: self.blocks(),
+      level: self.level,
+      score: self.score
+    };
     if (self.activePiece) {
       ret.active = self.activePiece.blocks();
     }
@@ -53,9 +62,14 @@ function TetrisLogic(width, height) {
 
       var blocks = self.activePiece.blocks();
       _.each(blocks, function(block) { // Blöcke liegen lassen
-        self.grid.blocks[block.x][block.y] = {type: block.type};
+        self.grid.setBlockAt(block.x, block.y, {type: block.type});
       });
-      self.spawn(Piece.createRandom());
+      var collapsedRows = self.grid.collapse();
+
+      self.score += (self.level * blocks.length) +
+        (self.level * self.grid.width * collapsedRows);
+
+      self.spawn();
     } else {
       self.activePiece.y += 1;
     }
@@ -71,7 +85,11 @@ function TetrisLogic(width, height) {
   };
 
   this.spawn = function spawn(piece) {
+    piece = piece || self.nextPiece || Piece.createRandom();
     self.activePiece = piece;
+
+    self.nextPiece = Piece.createRandom();
+
     piece.x = width / 2;
     piece.y = Math.max(0, 0 - piece.yMin());
   };
@@ -81,11 +99,9 @@ function TetrisLogic(width, height) {
     dy = dy || 0;
     blocksOnly = blocksOnly || false;
     return _.any(piece.blocks(piece.x + dx, piece.y + dy), function(block) {
-      if (block.x >= 0 && block.x < self.grid.width &&
-          block.y >= 0 && block.y < self.grid.height) {
-        return self.grid.blocks[block.x][block.y] !== Empty
+      if (self.grid.containsPoint(block.x, block.y)) {
+        return self.grid.blockAt(block.x, block.y) !== Empty
       } else {
-        console.log("out of bounds");
         return !blocksOnly;
       }
     });
@@ -98,24 +114,85 @@ function Grid(width, height) {
   this.width = width;
   this.height = height;
   this.blocks = new Array(width);
-  for (var x = 0; x < width; ++x) {
-    this.blocks[x] = new Array(height);
-    for (var y = 0; y < height; ++y) {
-      this.blocks[x][y] = Empty;
+  for (var y = 0; y < height; ++y) {
+    this.blocks[y] = new Array(width);
+    for (var x = 0; x < width; ++x) {
+      this.blocks[y][x] = Empty;
     }
   }
+
+  this.blockAt = function blockAt(x, y) {
+    return self.blocks[y][x];
+  };
+
+  this.setBlockAt = function setBlockAt(x, y, block) {
+    self.blocks[y][x] = block;
+  };
+
+  this.rowAt = function rowAt(y) {
+    return self.blocks[y];
+  };
+
+  this.rowEmpty = function rowEmpty(y) {
+    return _.all(self.rowAt(y), function(block) { return block === Empty });
+  };
+
+  this.clearRow = function clearRow(y) {
+    var row = self.rowAt(y);
+    for (var x = 0; x < self.width; ++x) {
+      row[x] = Empty;
+    }
+  };
+
+  this.containsPoint = function containsPoint(x, y) {
+    return x >= 0 && x < self.width && y >= 0 && y < self.height;
+  };
 
   this.listBlocks = function listBlocks() {
     var blocks = [];
     for (var x = 0; x < width; ++x) {
       for (var y = 0; y < height; ++y) {
-        var block = self.blocks[x][y];
+        var block = self.blocks[y][x];
         if (block !== Empty) {
           blocks.push({x: x, y: y, type: block.type});
         }
       }
     }
     return blocks;
+  };
+
+  this.checkCompleteRows = function checkCompleteRows() {
+    var i = -1;
+    var indices = _.flatten(_.map(self.blocks, function(row) {
+      ++i;
+      if (_.all(row, function(block) { return block !== Empty })) {
+        return [i];
+      } else {
+        return []
+      }
+    }));
+    return indices;
+  };
+
+  this.collapse = function collapse() {
+    var crows = self.checkCompleteRows();
+    _.each(crows, function(rowIndex) {
+      self.clearRow(rowIndex);
+    });
+
+    for (var y = self.height - 1; y >= 0; --y) {
+      if (!self.rowEmpty(y)) {
+        var bottomIndex = _.find(_.range(y + 1, self.height).reverse(), function(index) {
+          return self.rowEmpty(index);
+        });
+        if (bottomIndex !== undefined) {
+          var emptyRow = self.blocks[bottomIndex];
+          self.blocks[bottomIndex] = self.blocks[y];
+          self.blocks[y] = emptyRow;
+        }
+      }
+    }
+    return crows.length;
   };
 }
 
