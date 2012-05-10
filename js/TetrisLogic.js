@@ -7,6 +7,8 @@ function TetrisLogic(width, height) {
   this.interval = 1000;
   this.level = 1;
   this.score = 0;
+  this.clearedRows = 0;
+  this.lastClearedRows = [];
 
   this.blocks = function() {
     return self.grid.listBlocks();
@@ -41,7 +43,9 @@ function TetrisLogic(width, height) {
     var ret = {
       blocks: self.blocks(),
       level: self.level,
-      score: self.score
+      score: self.score,
+      clearedLines: Fun.ranges(self.lastClearedRows),
+      clearedLinesTotal: self.clearedRows
     };
     if (self.activePiece) {
       ret.active = self.activePiece.blocks();
@@ -67,7 +71,9 @@ function TetrisLogic(width, height) {
       var collapsedRows = self.grid.collapse();
 
       self.score += (self.level * blocks.length) +
-        (self.level * self.grid.width * collapsedRows);
+        (self.level * self.grid.width * collapsedRows.length);
+      self.clearedRows += collapsedRows.length;
+      self.lastClearedRows = collapsedRows;
 
       self.spawn();
     } else {
@@ -182,7 +188,8 @@ function Grid(width, height) {
 
     for (var y = self.height - 1; y >= 0; --y) {
       if (!self.rowEmpty(y)) {
-        var bottomIndex = _.find(_.range(y + 1, self.height).reverse(), function(index) {
+        var lowerIndices = _.range(y + 1, self.height).reverse();
+        var bottomIndex = _.find(lowerIndices, function(index) {
           return self.rowEmpty(index);
         });
         if (bottomIndex !== undefined) {
@@ -192,7 +199,7 @@ function Grid(width, height) {
         }
       }
     }
-    return crows.length;
+    return crows;
   };
 }
 
@@ -469,3 +476,24 @@ Piece.createZ = function createZ(angle) {
 
   return z;
 }
+
+function Fun() { }
+
+Fun.ranges = function ranges(is, result) {
+  result = result || [];
+  if (is.length === 0) return result;
+  if (result.length === 0) {
+    return ranges(is.slice(1), [[is[0], is[0]]]);
+  } else {
+    var range = result[result.length - 1];
+    var head = is[0];
+
+    if (range[1] + 1 === head) {
+      range[1] = head;
+      return ranges(is.slice(1), result);
+    } else {
+      result.push([head, head]);
+      return ranges(is.slice(1), result);
+    }
+  }
+};

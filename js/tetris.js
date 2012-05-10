@@ -7,7 +7,7 @@ function Tetris(canvasName, previewName) {
   var self = this;
   var mainLoop = function mainLoop() {
     if (self.logic.nextRound()) {
-      self.graphics.renderState(self.logic.state());
+      self.graphics.render(self.logic.state());
       setTimeout(mainLoop, self.logic.interval);
     } else {
       alert("Game Over");
@@ -15,7 +15,7 @@ function Tetris(canvasName, previewName) {
   };
   setTimeout(function() {
       self.logic.spawn();
-      self.graphics.renderState(self.logic.state());
+      self.graphics.render(self.logic.state());
       setTimeout(mainLoop, 1000);
     }, 2000);
 }
