@@ -39,7 +39,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
     this.renderPanel("score", state.score);
     this.renderPanel("lines", state.clearedLinesTotal);
     this.renderPanel("level", state.level);
-    //this.switchLevelTheme(state.level);
+    this.switchLevelTheme(state.level);
 
   }
 
@@ -215,79 +215,6 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
       this.currentTheme = newTheme;
     }
   }
-
-  var state = new TetrisState(
-    //blocks
-    [
-      //#
-      //#
-      //##
-      new Block(0, 0, 17),
-      new Block(0, 0, 18),
-      new Block(0, 0, 19),
-      new Block(0, 1, 19),
-
-      // #
-      // #
-      //##
-      new Block(1, 2, 15),
-      new Block(1, 2, 16),
-      new Block(1, 2, 17),
-      new Block(1, 1, 17),
-
-      //##
-      // ##
-      new Block(2, 1, 18),
-      new Block(2, 2, 18),
-      new Block(2, 2, 19),
-      new Block(2, 3, 19),
-
-      // ##
-      //##
-      new Block(3, 4, 19),
-      new Block(3, 5, 19),
-      new Block(3, 5, 18),
-      new Block(3, 6, 18),
-
-      //##
-      //##
-      new Block(4, 3, 17),
-      new Block(4, 3, 18),
-      new Block(4, 4, 17),
-      new Block(4, 4, 18),
-
-      //#
-      //#
-      //#
-      //#
-      new Block(5, 9, 16),
-      new Block(5, 9, 17),
-      new Block(5, 9, 18),
-      new Block(5, 9, 19),
-
-      // #
-      //###
-      new Block(6, 7, 18),
-      new Block(6, 6, 19),
-      new Block(6, 7, 19),
-      new Block(6, 8, 19)
-    ],
-
-    //active
-    [
-
-    ],
-
-    //preview
-    [
-      new Block(5, 9, 16),
-      new Block(5, 9, 17),
-      new Block(5, 9, 18),
-      new Block(5, 9, 19),
-    ],
-    [[18, 19]], 12, 567, 3);
-
-  this.render(state);
 
 }
 

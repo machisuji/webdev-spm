@@ -59,6 +59,10 @@ html.level_0, body.level_0 {
     background: url("../img/level_0/bg.jpg") no-repeat scroll right bottom transparent;
 }
 
+#preview.level_0 {
+    background: url("../img/preview_bg.png") repeat scroll 0 0 transparent;
+}
+
 #score .level_0.headline {
     background: url("../img/level_0/score.png") repeat scroll 0 0 transparent;
 }
@@ -110,6 +114,10 @@ html.level_0, body.level_0 {
 
 html.level_1, body.level_1 {
     background: url("../img/level_1/bg.jpg") no-repeat scroll right bottom transparent;
+}
+
+#preview.level_1 {
+    background: url("../img/preview_bg.png") repeat scroll 0 700px transparent;
 }
 
 #score .level_1.headline {
@@ -165,6 +173,10 @@ html.level_2, body.level_2 {
     background: url("../img/level_2/bg.jpg") no-repeat scroll right bottom transparent;
 }
 
+#preview.level_2 {
+    background: url("../img/preview_bg.png") repeat scroll 0 560px transparent;
+}
+
 #score .level_2.headline {
     background: url("../img/level_2/score.png") repeat scroll 0 0 transparent;
 }
@@ -216,6 +228,10 @@ html.level_2, body.level_2 {
 
 html.level_3, body.level_3 {
     background: url("../img/level_3/bg.jpg") no-repeat scroll right bottom transparent;
+}
+
+#preview.level_3 {
+    background: url("../img/preview_bg.png") repeat scroll 0 420px transparent;
 }
 
 #score .level_3.headline {
@@ -271,6 +287,10 @@ html.level_4, body.level_4 {
     background: url("../img/level_4/bg.jpg") no-repeat scroll right bottom transparent;
 }
 
+#preview.level_4 {
+    background: url("../img/preview_bg.png") repeat scroll 0 280px transparent;
+}
+
 #score .level_4.headline {
     background: url("../img/level_4/score.png") repeat scroll 0 0 transparent;
 }
@@ -322,6 +342,10 @@ html.level_4, body.level_4 {
 
 html.level_5, body.level_5 {
     background: url("../img/level_5/bg.jpg") no-repeat scroll right bottom transparent;
+}
+
+#preview.level_5 {
+    background: url("../img/preview_bg.png") repeat scroll 0 140px transparent;
 }
 
 #score .level_5.headline {
