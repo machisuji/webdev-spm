@@ -87,7 +87,7 @@ function TetrisLogic(width, height) {
       self.lastClearedRows = collapsedRows;
       self.level = Math.min(5, Math.max(self.level,
         1 + Math.floor(self.score / (100.0 * self.level))));
-      self.interval = 1000 - self.level;
+      self.interval = 1000 - (self.level*100);
 
       self.spawn();
     } else {
