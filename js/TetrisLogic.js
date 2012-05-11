@@ -325,7 +325,7 @@ function Piece(attr) {
 
 Piece.createRandom = function createRandom() {
   var shapes = [Piece.createBar, Piece.createTri, Piece.createBlock,
-                Piece.createL, Piece.createZ];
+                Piece.createL, Piece.createLMirrored, Piece.createZ, Piece.createZMirrored];
   var index = Math.floor(Math.random() * shapes.length);
   return shapes[index]();
 }
@@ -428,21 +428,31 @@ Piece.createL = function createL(angle) {
   var alpha = l.angle % 360;
 
   if (alpha == 0) {
-    l.bottom = new Piece();
-    l.bottom.bottom = new Piece();
-    l.bottom.bottom.right = new Piece();
+    // #
+    // #
+    // ##
+    l.top = new Piece();
+    l.top.top = new Piece();
+    l.right = new Piece();
   } else if (alpha == 90) {
+    // ###
+    // #
     l.bottom = new Piece();
     l.right = new Piece();
     l.right.right = new Piece();
   } else if (alpha == 180) {
+    // ##
+    //  #
+    //  #
     l.left = new Piece();
     l.bottom = new Piece();
     l.bottom.bottom = new Piece();
   } else if (alpha == 270) {
-    l.right = new Piece();
-    l.right.right = new Piece();
-    l.right.right.top = new Piece();
+    //   #
+    // ###
+    l.top = new Piece();
+    l.left = new Piece();
+    l.left.left = new Piece();
   }
 
   l.rotate = function rotate() {
@@ -457,26 +467,67 @@ Piece.createL = function createL(angle) {
   return l;
 };
 
+Piece.createLMirrored = function createLMirrored(angle) {
+  var l = new Piece({angle: angle || 0});
+  var alpha = l.angle % 360;
+
+  if (alpha == 0) {
+    //  #
+    //  #
+    // ##
+    l.top = new Piece();
+    l.top.top = new Piece();
+    l.left = new Piece();
+  } else if (alpha == 90) {
+    // #
+    // ###
+    l.top = new Piece();
+    l.right = new Piece();
+    l.right.right = new Piece();
+  } else if (alpha == 180) {
+    // ##
+    // #
+    // #
+    l.right = new Piece();
+    l.bottom = new Piece();
+    l.bottom.bottom = new Piece();
+  } else if (alpha == 270) {
+    // ###
+    //   #
+    l.bottom = new Piece();
+    l.left = new Piece();
+    l.left.left = new Piece();
+  }
+
+  l.rotate = function rotate() {
+    var rotated = createLMirrored(l.angle + 90);
+    rotated.x = l.x;
+    rotated.y = l.y;
+
+    return rotated;
+  };
+  l.setType(4);
+
+  return l;
+};
+
 Piece.createZ = function createZ(angle) {
   var z = new Piece({angle: angle || 0});
   var alpha = z.angle % 360;
 
-  if (alpha == 0) {
+  if (alpha == 0 || alpha == 180) {
+    //  ##
+    // ##
     z.left = new Piece();
     z.top = new Piece();
     z.top.right = new Piece();
-  } else if (alpha == 90) {
+  } else if (alpha == 90 || alpha == 270) {
+    // #
+    // ##
+    //  #
     z.top = new Piece();
     z.right = new Piece(),
     z.right.bottom = new Piece();
-  } else if (alpha == 180) {
-    z.right = new Piece();
-    z.bottom = new Piece();
-    z.bottom.left = new Piece();
-  } else if (alpha == 270) {
-    z.top = new Piece();
-    z.left = new Piece();
-    z.left.bottom = new Piece();
   }
 
   z.rotate = function rotate() {
@@ -486,7 +537,38 @@ Piece.createZ = function createZ(angle) {
 
     return rotated;
   };
-  z.setType(4);
+  z.setType(5);
+
+  return z;
+}
+
+Piece.createZMirrored = function createZMirrored(angle) {
+  var z = new Piece({angle: angle || 0});
+  var alpha = z.angle % 360;
+
+  if (alpha == 0 || alpha == 180) {
+    // ##
+    //  ##
+    z.right = new Piece();
+    z.top = new Piece();
+    z.top.left = new Piece();
+  } else if (alpha == 90 || alpha == 270) {
+    //  #
+    // ##
+    // #
+    z.bottom = new Piece();
+    z.right = new Piece(),
+    z.right.top = new Piece();
+  }
+
+  z.rotate = function rotate() {
+    var rotated = createZMirrored(z.angle + 90);
+    rotated.x = z.x;
+    rotated.y = z.y;
+
+    return rotated;
+  };
+  z.setType(6);
 
   return z;
 }
