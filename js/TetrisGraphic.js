@@ -34,7 +34,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
 
 
   this.render = function(state) {
-    this.highlightLines(state.clearedLines);
+    //this.highlightLines(state.clearedLines);
     this.renderState(state);
     this.renderPanel("score", state.score);
     this.renderPanel("lines", state.clearedLinesTotal);
