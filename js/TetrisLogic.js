@@ -17,7 +17,18 @@ function TetrisLogic(width, height) {
   this.moveRight = function() { self.move(1, 0) };
   this.moveLeft = function() { self.move(-1, 0) };
   this.moveDown = function() { self.move(0, 1) };
-  this.setDown = function(){alert("Space");};
+  this.setDown = function(dy){
+    var dy = dy || 0;
+    dy += 1;
+    if (self.activePiece){
+      if(!self.collision(self.activePiece, 0 , dy)){
+        self.setDown(dy)
+      } else {
+        self.move(0, dy -1);
+      }
+    }
+    return true;
+  };
   this.rotate = function() {
     if (self.activePiece) {
       var rotated = self.activePiece.rotate();
