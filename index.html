@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html class="level_0">
  <head>
   <meta charset="utf-8"></meta>
   <link rel="stylesheet" type="text/css" href="css/style.css">
 
   <script type="text/javascript" src="js/underscore.js"></script>
   <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
   <script type="text/javascript" src="js/raphael-min.js"></script>
   <script type="text/javascript" src="js/tetris.js"></script>
   <script type="text/javascript" src="js/TetrisLogic.js"></script>
@@ -14,17 +15,30 @@
 
   <title>Tetris</title>
  </head>
- <body onload="tetris = new Tetris('canvas', 'preview');">
+ <body class="level_0" onload="tetris = new Tetris('canvas', 'preview');">
   <div id="main">
-    <div id="canvas"></div>
-    <div id="preview"></div>
-    <div id="score">
-      <div class="score zero"></div>
-      <div class="score two"></div>
-      <div class="score three"></div>
-      <div class="score four"></div>
+    <div id="canvas" class="glow"></div>
+    <div id="preview" class="glow level_0"></div>
+    <div id="panel">
+      <div id="score" class="panel">
+        <div class="level_0 headline"></div>
+        <div class="glow score level_0 zero"></div>
+        <div class="glow score level_0 zero"></div>
+        <div class="glow score level_0 zero"></div>
+        <div class="glow score level_0 zero"></div>
+      </div>
+      <div id="lines" class="panel">
+        <div class="level_0 headline"></div>
+        <div class="glow score level_0 zero"></div>
+        <div class="glow score level_0 zero"></div>
+        <div class="glow score level_0 zero"></div>
+      </div>
+      <div id="level" class="panel">
+        <div class="level_0 headline"></div>
+        <div class="glow score level_0 zero"></div>
+        <div class="glow score level_0 zero"></div>
+      </div>
     </div>
-    <div id="clearedLines"></div>
   </div>
 
 

@@ -1,5 +1,7 @@
-function Controls(logic) {
+function Controls(logic, graphics) {
   this.logic = logic;
+  this.graphics = graphics;
+
   var self = this;
 
   this.actions = {
@@ -36,6 +38,9 @@ function Controls(logic) {
     if (action) {
       e.preventDefault();
       action.apply();
+      setTimeout(function() {
+          self.graphics.renderState(self.logic.state());
+        }, 0);
     }
    };
   });
