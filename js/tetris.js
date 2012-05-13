@@ -8,9 +8,7 @@ function Tetris(players) {
   var mainLoop = function mainLoop(player) {
     if (player.logic.nextRound()) {
       player.graphics.render(player.logic.state());
-      if (!self.gameOver) {
-        setTimeout(function(){mainLoop(player)}, player.logic.interval);
-      }
+      setTimeout(function(){mainLoop(player)}, player.logic.interval);
     } else {
       self.gameOver = true;
       if (self.players.length > 1) {
