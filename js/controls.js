@@ -7,23 +7,23 @@ function Controls(logic, graphics, players) {
 
   this.actions = {
     setDown: {
-      codes: [32, 121], // space, Y
+      codes: [121, 32], // Y, space
       apply: function(index) { players[index].logic.setDown(); }
     },
     moveLeft: {
-      codes: [37, 97], // left arrow, A
+      codes: [97, 37], // A, left arrow
       apply: function(index) { players[index].logic.moveLeft(); }
     },
     moveRight: {
-      codes: [39, 100], // right arrow, D
+      codes: [100, 39], // D, right arrow
       apply: function(index) { players[index].logic.moveRight(); }
     },
     moveDown: {
-      codes: [40, 115], // arrow down, S
+      codes: [115, 40], // S arrow down
       apply: function(index) { players[index].logic.moveDown(); }
     },
     rotate: {
-      codes: [38, 119], // arrow up, W
+      codes: [119, 38], // W, arrow up
       apply: function(index) { players[index].logic.rotate(); }
     }
   };
