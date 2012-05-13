@@ -1,29 +1,30 @@
-function Controls(logic, graphics) {
+function Controls(logic, graphics, players) {
   this.logic = logic;
   this.graphics = graphics;
+  this.players = players;
 
   var self = this;
 
   this.actions = {
     setDown: {
-      codes: [32], // space
-      apply: function() { self.logic.setDown(); }
+      codes: [32, 121], // space, Y
+      apply: function(index) { players[index].logic.setDown(); }
     },
     moveLeft: {
       codes: [37, 97], // left arrow, A
-      apply: function() { self.logic.moveLeft(); }
+      apply: function(index) { players[index].logic.moveLeft(); }
     },
     moveRight: {
       codes: [39, 100], // right arrow, D
-      apply: function() { self.logic.moveRight(); }
+      apply: function(index) { players[index].logic.moveRight(); }
     },
     moveDown: {
       codes: [40, 115], // arrow down, S
-      apply: function() { self.logic.moveDown(); }
+      apply: function(index) { players[index].logic.moveDown(); }
     },
     rotate: {
       codes: [38, 119], // arrow up, W
-      apply: function() { self.logic.rotate(); }
+      apply: function(index) { players[index].logic.rotate(); }
     }
   };
 
@@ -37,9 +38,10 @@ function Controls(logic, graphics) {
     });
     if (action) {
       e.preventDefault();
-      action.apply();
+      var index = action.codes.indexOf(key);
+      action.apply(index);
       setTimeout(function() {
-          self.graphics.renderState(self.logic.state());
+          players[index].graphics.renderState(players[index].logic.state());
         }, 0);
     }
    };
