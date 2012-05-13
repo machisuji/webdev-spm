@@ -1,30 +1,34 @@
 
-function Tetris() {
-  this.player1 = new Player("Player 1", "player1", 0);
-  this.player2 = new Player("Player 2", "player2", 1);
-
-  this.controls = new Controls(this.logic, this.graphics, [this.player1, this.player2]);
-
+function Tetris(players) {
+  this.players = players;
+  this.controls = new Controls(this.logic, this.graphics, this.players);
+  this.gameOver = false;
   var self = this;
+
   var mainLoop = function mainLoop(player) {
     if (player.logic.nextRound()) {
       player.graphics.render(player.logic.state());
-      setTimeout(function(){mainLoop(player)}, player.logic.interval);
+      if (!self.gameOver) {
+        setTimeout(function(){mainLoop(player)}, player.logic.interval);
+      }
     } else {
-      alert(player.name + " is\nGame Over");
+      self.gameOver = true;
+      if (self.players.length > 1) {
+        alert("Game Over\n" + player.name + ": you lose. Buahaha!");
+      } else {
+        alert("Game Over");
+      }
+      // at this point you could reset the graphics and show the menu again
+      // dunno how to reset the graphics though
     }
   };
-  var start = function start(players) {
-    _.each(players, function(player) {
+  this.start = function start() {
+    _.each(self.players, function(player) {
       player.logic.spawn();
       player.graphics.render(player.logic.state());
-      setTimeout(function() { mainLoop(player) }, 1000);
+      setTimeout(function() { mainLoop(player) }, 0);
     });
   };
-  setTimeout(function() {
-      start(self.player1);
-      start(self.player2);
-    }, 2000);
 }
 
 function Player(name, fieldId, nr) {
@@ -49,3 +53,23 @@ function TetrisState(blocks, active, preview, clearedLines, clearedLinesTotal, s
   this.score = score; //score (int)
   this.level = level; //current level (int)
 }
+
+$(document).ready(function() {
+  $("#start-one-player").click(function() {
+    $("#menu").hide();
+    $("#player1").show();
+
+    tetris = new Tetris([new Player("Player 1", "player1", 0)]);
+    setTimeout(tetris.start, 0);
+  });
+
+  $("#start-two-players").click(function() {
+    $("#menu").hide();
+    $("#player1").show();
+    $("#player2").show();
+
+    tetris = new Tetris([new Player("Player 1", "player1", 0),
+      new Player("Player 2", "player2", 1)]);
+    setTimeout(tetris.start, 0);
+  });
+});

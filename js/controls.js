@@ -4,27 +4,36 @@ function Controls(logic, graphics, players) {
   this.players = players;
 
   var self = this;
+  var playerAt = function(index) {
+    return self.players[index];
+  }
+
+  if (players.length == 1) { // control however you want
+    playerAt = function(index) {
+      return self.players[0];
+    };
+  };
 
   this.actions = {
     setDown: {
       codes: [121, 32], // Y, space
-      apply: function(index) { players[index].logic.setDown(); }
+      apply: function(index) { playerAt(index).logic.setDown(); }
     },
     moveLeft: {
       codes: [97, 37], // A, left arrow
-      apply: function(index) { players[index].logic.moveLeft(); }
+      apply: function(index) { playerAt(index).logic.moveLeft(); }
     },
     moveRight: {
       codes: [100, 39], // D, right arrow
-      apply: function(index) { players[index].logic.moveRight(); }
+      apply: function(index) { playerAt(index).logic.moveRight(); }
     },
     moveDown: {
       codes: [115, 40], // S arrow down
-      apply: function(index) { players[index].logic.moveDown(); }
+      apply: function(index) { playerAt(index).logic.moveDown(); }
     },
     rotate: {
       codes: [119, 38], // W, arrow up
-      apply: function(index) { players[index].logic.rotate(); }
+      apply: function(index) { playerAt(index).logic.rotate(); }
     }
   };
 
@@ -41,7 +50,7 @@ function Controls(logic, graphics, players) {
       var index = action.codes.indexOf(key);
       action.apply(index);
       setTimeout(function() {
-          players[index].graphics.renderState(players[index].logic.state());
+          playerAt(index).graphics.renderState(playerAt(index).logic.state());
         }, 0);
     }
    };

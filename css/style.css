@@ -18,14 +18,38 @@ html, body {
     position: relative;
     width: 990px;
 }
+
+#menu {
+  width: 100px;
+  padding: 25px;
+  margin: 60px auto;
+  text-align: center;
+
+  background-color: #EEFFAA;
+  border: 1px solid black;
+  border-radius: 25px;
+}
+
+#menu .title {
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+#menu button {
+  margin-top: 10px;
+}
+
 #player1 {
   float: left;
   width: 470px;
+  display: none;
 }
 #player2 {
-    float: left;
-    width: 470px;
-    margin-left: 40px;
+  float: left;
+  width: 470px;
+  margin-left: 40px;
+  display: none;
 }
 
 .preview {
