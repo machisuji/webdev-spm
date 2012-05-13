@@ -14,13 +14,16 @@ function Tetris() {
       alert(player.name + " is\nGame Over");
     }
   };
+  var start = function start(players) {
+    _.each(players, function(player) {
+      player.logic.spawn();
+      player.graphics.render(player.logic.state());
+      setTimeout(function() { mainLoop(player) }, 1000);
+    });
+  };
   setTimeout(function() {
-      self.player1.logic.spawn();
-      self.player2.logic.spawn();
-      self.player1.graphics.render(self.player1.logic.state());
-      self.player2.graphics.render(self.player2.logic.state());
-      setTimeout(function(){mainLoop(self.player1)}, 1000);
-      setTimeout(function(){mainLoop(self.player2)}, 1000);
+      start(self.player1);
+      start(self.player2);
     }, 2000);
 }
 
