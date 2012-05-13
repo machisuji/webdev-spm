@@ -17,9 +17,19 @@ html, body {
     height: 600px;
     margin: 30px auto;
     position: relative;
-    width: 450px;
+    width: 990px;
+}
+#player1{
+  float: left;
+  width: 470px;
+}
+#player2 {
+    float: left;
+    width: 470px;
+    margin-left: 40px;
 }
 #preview {
+    position: relative;
     height: 140px;
     left: 330px;
     width: 140px;
@@ -28,7 +38,7 @@ html, body {
 #panel {
     position: relative;
     left: 330px;
-    top: 253px;
+    top: 40px;
     width: 155px;
 }
 
