@@ -1,23 +1,30 @@
 
 function Tetris(canvasName, previewName) {
-  this.logic = new TetrisLogic(10, 20);
-  this.graphics = new TetrisGraphic(canvasName, 10, 20, previewName, 4, 4);
-  this.controls = new Controls(this.logic, this.graphics);
+  this.player1 = new Player(new TetrisLogic(10, 20),
+                            new TetrisGraphic(canvasName, 10, 20, previewName, 4, 4),
+                            "Player 1");
 
   var self = this;
-  var mainLoop = function mainLoop() {
-    if (self.logic.nextRound()) {
-      self.graphics.render(self.logic.state());
-      setTimeout(mainLoop, self.logic.interval);
+  var mainLoop = function mainLoop(player) {
+    if (player.logic.nextRound()) {
+      player.graphics.render(player.logic.state());
+      setTimeout(function(){mainLoop(player)}, player.logic.interval);
     } else {
-      alert("Game Over");
+      alert(player.name + " is\nGame Over");
     }
   };
   setTimeout(function() {
-      self.logic.spawn();
-      self.graphics.render(self.logic.state());
-      setTimeout(mainLoop, 1000);
+      self.player1.logic.spawn();
+      self.player1.graphics.render(self.player1.logic.state());
+      setTimeout(function(){mainLoop(self.player1)}, 1000);
     }, 2000);
+}
+
+function Player(logic, graphics, name) {
+  this.logic = logic;
+  this.graphics = graphics;
+  this.controls = new Controls(this.logic, this.graphics);
+  this.name = name;
 }
 
 //x,y are int positions, type is an int specifying the color of the block
