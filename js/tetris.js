@@ -1,8 +1,7 @@
 
-function Tetris(canvasName, previewName) {
-  this.player1 = new Player(new TetrisLogic(10, 20),
-                            new TetrisGraphic(canvasName, 10, 20, previewName, 4, 4),
-                            "Player 1");
+function Tetris() {
+  this.player1 = new Player("Player 1", "player1");
+  this.player2 = new Player("Player 2", "player2");
 
   var self = this;
   var mainLoop = function mainLoop(player) {
@@ -20,9 +19,9 @@ function Tetris(canvasName, previewName) {
     }, 2000);
 }
 
-function Player(logic, graphics, name) {
-  this.logic = logic;
-  this.graphics = graphics;
+function Player(name, fieldId) {
+  this.logic = new TetrisLogic(10, 20);
+  this.graphics = new TetrisGraphic(10, 20, fieldId);
   this.controls = new Controls(this.logic, this.graphics);
   this.name = name;
 }
