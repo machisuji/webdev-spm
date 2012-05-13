@@ -25,9 +25,10 @@ function TetrisGraphic(canvasRows, canvasColumns, fieldId) {
       0: "img/orange.png", 1: "img/red.png", 2: "img/yellow.png", 3: "img/green.png", 4: "img/gray.png", 5: "img/purple.png", 6: "img/blue.png"
     }
   };
-  this.canvasName = "#" + fieldId + " .canvas";
-  this.canvas = new TetrisWindow(fieldId + "_canvas", canvasRows, canvasColumns);
-  this.previewName = "#" + fieldId + " .preview";
+  this.fieldId = fieldId;
+  this.canvasName = fieldId + "_canvas";
+  this.canvas = new TetrisWindow(this.canvasName, canvasRows, canvasColumns);
+  this.previewName = fieldId + "_preview";
   this.preview = null;
   this.currentTheme = "level_0";
 
@@ -132,7 +133,7 @@ function TetrisGraphic(canvasRows, canvasColumns, fieldId) {
 
   this.renderPanel = function(name, val) {
     var str = val.toString();
-    var container = $('#' + name);
+    var container = $(name);
     var childrenCount = container.children().length - 1;
     var missingLeadingZeros = childrenCount - str.length;
     _.each(_.range(missingLeadingZeros), function() {
@@ -211,7 +212,7 @@ function TetrisGraphic(canvasRows, canvasColumns, fieldId) {
   this.switchLevelTheme = function(level) {
     var newTheme = "level_" + level.toString();
     if (newTheme != this.currentTheme) {
-      $("." + this.currentTheme).switchClass(this.currentTheme, newTheme, 1000);
+      $("#" + this.fieldId + " ." + this.currentTheme).switchClass(this.currentTheme, newTheme, 1000);
 
       this.currentTheme = newTheme;
     }

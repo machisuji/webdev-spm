@@ -14,8 +14,11 @@ function Tetris() {
   };
   setTimeout(function() {
       self.player1.logic.spawn();
+      self.player2.logic.spawn();
       self.player1.graphics.render(self.player1.logic.state());
+      self.player2.graphics.render(self.player2.logic.state());
       setTimeout(function(){mainLoop(self.player1)}, 1000);
+      setTimeout(function(){mainLoop(self.player2)}, 1000);
     }, 2000);
 }
 
