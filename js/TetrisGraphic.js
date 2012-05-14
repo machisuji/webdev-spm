@@ -233,7 +233,7 @@ function TetrisWindow(canvasName, xCount, yCount) {
   _.each(_.range(self.xCount), function(x) {
       self.points[x] = new Array(self.yCount);
       _.each(_.range(self.yCount), function(y) {
-        self.points[x][y] = self.canvas.rect(x * self.pWidth, y * self.pHeight, self.pWidth, self.pHeight).attr({"stroke-opacity": 0.3, 'fill-opacity': '0.75', 'fill': '#fff'});
+        self.points[x][y] = self.canvas.rect(x * self.pWidth, y * self.pHeight, self.pWidth, self.pHeight).attr({"stroke-opacity": 0.05, 'fill-opacity': '0.75', 'fill': '#fff'});
       });
   });
 
