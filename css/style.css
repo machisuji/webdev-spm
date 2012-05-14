@@ -104,38 +104,38 @@ html.level_0, body.level_0 {
     background: url("../img/level_0/level.png") repeat scroll 0 0 transparent;
 }
 
-.level_0 .zero {
+.level_0.zero {
     background: url("../img/level_0/numbers.png") repeat scroll 0 0 transparent;
 }
-.level_0 .one {
+.level_0.one {
     background: url("../img/level_0/numbers.png") repeat scroll 0 378px transparent;
 }
-.level_0 .two {
+.level_0.two {
     background: url("../img/level_0/numbers.png") repeat scroll 0 336px transparent;
 }
-.level_0 .three {
+.level_0.three {
     background: url("../img/level_0/numbers.png") repeat scroll 0 294px transparent;
 }
-.level_0 .four {
+.level_0.four {
     background: url("../img/level_0/numbers.png") repeat scroll 0 252px transparent;
 }
-.level_0 .five {
+.level_0.five {
     background: url("../img/level_0/numbers.png") repeat scroll 0 210px transparent;
 }
-.level_0 .six {
+.level_0.six {
     background: url("../img/level_0/numbers.png") repeat scroll 0 168px transparent;
 }
-.level_0 .seven {
+.level_0.seven {
     background: url("../img/level_0/numbers.png") repeat scroll 0 126px transparent;
 }
-.level_0 .eight {
+.level_0.eight {
     background: url("../img/level_0/numbers.png") repeat scroll 0 84px transparent;
 }
-.level_0 .nine {
+.level_0.nine {
     background: url("../img/level_0/numbers.png") repeat scroll 0 42px transparent;
 }
 
-.level_0 .glow {
+.level_0.glow {
     border: 2px solid #9ecaed;
     box-shadow: 0 0 15px #9ecaed;
 }
@@ -161,38 +161,38 @@ html.level_1, body.level_1 {
     background: url("../img/level_1/level.png") repeat scroll 0 0 transparent;
 }
 
-.level_1 .zero {
+.level_1.zero {
     background: url("../img/level_1/numbers.png") repeat scroll 0 0 transparent;
 }
-.level_1 .one {
+.level_1.one {
     background: url("../img/level_1/numbers.png") repeat scroll 0 378px transparent;
 }
-.level_1 .two {
+.level_1.two {
     background: url("../img/level_1/numbers.png") repeat scroll 0 336px transparent;
 }
-.level_1 .three {
+.level_1.three {
     background: url("../img/level_1/numbers.png") repeat scroll 0 294px transparent;
 }
-.level_1 .four {
+.level_1.four {
     background: url("../img/level_1/numbers.png") repeat scroll 0 252px transparent;
 }
-.level_1 .five {
+.level_1.five {
     background: url("../img/level_1/numbers.png") repeat scroll 0 210px transparent;
 }
-.level_1 .six {
+.level_1.six {
     background: url("../img/level_1/numbers.png") repeat scroll 0 168px transparent;
 }
-.level_1 .seven {
+.level_1.seven {
     background: url("../img/level_1/numbers.png") repeat scroll 0 126px transparent;
 }
-.level_1 .eight {
+.level_1.eight {
     background: url("../img/level_1/numbers.png") repeat scroll 0 84px transparent;
 }
-.level_1 .nine {
+.level_1.nine {
     background: url("../img/level_1/numbers.png") repeat scroll 0 42px transparent;
 }
 
-.level_1 .glow {
+.level_1.glow {
     border: 2px solid #d6a3b7;
     box-shadow: 0 0 15px #d6a3b7;
 }
@@ -218,38 +218,38 @@ html.level_2, body.level_2 {
     background: url("../img/level_2/level.png") repeat scroll 0 0 transparent;
 }
 
-.level_2 .zero {
+.level_2.zero {
     background: url("../img/level_2/numbers.png") repeat scroll 0 0 transparent;
 }
-.level_2 .one {
+.level_2.one {
     background: url("../img/level_2/numbers.png") repeat scroll 0 378px transparent;
 }
-.level_2 .two {
+.level_2.two {
     background: url("../img/level_2/numbers.png") repeat scroll 0 336px transparent;
 }
-.level_2 .three {
+.level_2.three {
     background: url("../img/level_2/numbers.png") repeat scroll 0 294px transparent;
 }
-.level_2 .four {
+.level_2.four {
     background: url("../img/level_2/numbers.png") repeat scroll 0 252px transparent;
 }
-.level_2 .five {
+.level_2.five {
     background: url("../img/level_2/numbers.png") repeat scroll 0 210px transparent;
 }
-.level_2 .six {
+.level_2.six {
     background: url("../img/level_2/numbers.png") repeat scroll 0 168px transparent;
 }
-.level_2 .seven {
+.level_2.seven {
     background: url("../img/level_2/numbers.png") repeat scroll 0 126px transparent;
 }
-.level_2 .eight {
+.level_2.eight {
     background: url("../img/level_2/numbers.png") repeat scroll 0 84px transparent;
 }
-.level_2 .nine {
+.level_2.nine {
     background: url("../img/level_2/numbers.png") repeat scroll 0 42px transparent;
 }
 
-.level_2 .glow {
+.level_2.glow {
     border: 2px solid #7eff60;
     box-shadow: 0 0 15px #7eff60;
 }
@@ -275,38 +275,38 @@ html.level_3, body.level_3 {
     background: url("../img/level_3/level.png") repeat scroll 0 0 transparent;
 }
 
-.level_3 .zero {
+.level_3.zero {
     background: url("../img/level_3/numbers.png") repeat scroll 0 0 transparent;
 }
-.level_3 .one {
+.level_3.one {
     background: url("../img/level_3/numbers.png") repeat scroll 0 378px transparent;
 }
-.level_3 .two {
+.level_3.two {
     background: url("../img/level_3/numbers.png") repeat scroll 0 336px transparent;
 }
-.level_3 .three {
+.level_3.three {
     background: url("../img/level_3/numbers.png") repeat scroll 0 294px transparent;
 }
-.level_3 .four {
+.level_3.four {
     background: url("../img/level_3/numbers.png") repeat scroll 0 252px transparent;
 }
-.level_3 .five {
+.level_3.five {
     background: url("../img/level_3/numbers.png") repeat scroll 0 210px transparent;
 }
-.level_3 .six {
+.level_3.six {
     background: url("../img/level_3/numbers.png") repeat scroll 0 168px transparent;
 }
-.level_3 .seven {
+.level_3.seven {
     background: url("../img/level_3/numbers.png") repeat scroll 0 126px transparent;
 }
-.level_3 .eight {
+.level_3.eight {
     background: url("../img/level_3/numbers.png") repeat scroll 0 84px transparent;
 }
-.level_3 .nine {
+.level_3.nine {
     background: url("../img/level_3/numbers.png") repeat scroll 0 42px transparent;
 }
 
-.level_3 .glow {
+.level_3.glow {
     border: 2px solid #cc95ff;
     box-shadow: 0 0 15px #cc95ff;
 }
@@ -332,38 +332,38 @@ html.level_4, body.level_4 {
     background: url("../img/level_4/level.png") repeat scroll 0 0 transparent;
 }
 
-.level_4 .zero {
+.level_4.zero {
     background: url("../img/level_4/numbers.png") repeat scroll 0 0 transparent;
 }
-.level_4 .one {
+.level_4.one {
     background: url("../img/level_4/numbers.png") repeat scroll 0 378px transparent;
 }
-.level_4 .two {
+.level_4.two {
     background: url("../img/level_4/numbers.png") repeat scroll 0 336px transparent;
 }
-.level_4 .three {
+.level_4.three {
     background: url("../img/level_4/numbers.png") repeat scroll 0 294px transparent;
 }
-.level_4 .four {
+.level_4.four {
     background: url("../img/level_4/numbers.png") repeat scroll 0 252px transparent;
 }
-.level_4 .five {
+.level_4.five {
     background: url("../img/level_4/numbers.png") repeat scroll 0 210px transparent;
 }
-.level_4 .six {
+.level_4.six {
     background: url("../img/level_4/numbers.png") repeat scroll 0 168px transparent;
 }
-.level_4 .seven {
+.level_4.seven {
     background: url("../img/level_4/numbers.png") repeat scroll 0 126px transparent;
 }
-.level_4 .eight {
+.level_4.eight {
     background: url("../img/level_4/numbers.png") repeat scroll 0 84px transparent;
 }
-.level_4 .nine {
+.level_4.nine {
     background: url("../img/level_4/numbers.png") repeat scroll 0 42px transparent;
 }
 
-.level_4 .glow {
+.level_4.glow {
     border: 2px solid #b4cf57;
     box-shadow: 0 0 15px #b4cf57;
 }
@@ -389,38 +389,38 @@ html.level_5, body.level_5 {
     background: url("../img/level_5/level.png") repeat scroll 0 0 transparent;
 }
 
-.level_5 .zero {
+.level_5.zero {
     background: url("../img/level_5/numbers.png") repeat scroll 0 0 transparent;
 }
-.level_5 .one {
+.level_5.one {
     background: url("../img/level_5/numbers.png") repeat scroll 0 378px transparent;
 }
-.level_5 .two {
+.level_5.two {
     background: url("../img/level_5/numbers.png") repeat scroll 0 336px transparent;
 }
-.level_5 .three {
+.level_5.three {
     background: url("../img/level_5/numbers.png") repeat scroll 0 294px transparent;
 }
-.level_5 .four {
+.level_5.four {
     background: url("../img/level_5/numbers.png") repeat scroll 0 252px transparent;
 }
-.level_5 .five {
+.level_5.five {
     background: url("../img/level_5/numbers.png") repeat scroll 0 210px transparent;
 }
-.level_5 .six {
+.level_5.six {
     background: url("../img/level_5/numbers.png") repeat scroll 0 168px transparent;
 }
-.level_5 .seven {
+.level_5.seven {
     background: url("../img/level_5/numbers.png") repeat scroll 0 126px transparent;
 }
-.level_5 .eight {
+.level_5.eight {
     background: url("../img/level_5/numbers.png") repeat scroll 0 84px transparent;
 }
-.level_5 .nine {
+.level_5.nine {
     background: url("../img/level_5/numbers.png") repeat scroll 0 42px transparent;
 }
 
-.level_5 .glow {
+.level_5.glow {
     border: 2px solid #dd85c1;
     box-shadow: 0 0 15px #dd85c1;
 }
