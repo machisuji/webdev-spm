@@ -1,29 +1,39 @@
-function Controls(logic, graphics) {
+function Controls(logic, graphics, players) {
   this.logic = logic;
   this.graphics = graphics;
+  this.players = players;
 
   var self = this;
+  var playerAt = function(index) {
+    return self.players[index];
+  }
+
+  if (players.length == 1) { // control however you want
+    playerAt = function(index) {
+      return self.players[0];
+    };
+  };
 
   this.actions = {
     setDown: {
-      codes: [32], // space
-      apply: function() { self.logic.setDown(); }
+      codes: [121, 32], // Y, space
+      apply: function(index) { playerAt(index).logic.setDown(); }
     },
     moveLeft: {
-      codes: [37, 97], // left arrow, A
-      apply: function() { self.logic.moveLeft(); }
+      codes: [97, 37], // A, left arrow
+      apply: function(index) { playerAt(index).logic.moveLeft(); }
     },
     moveRight: {
-      codes: [39, 100], // right arrow, D
-      apply: function() { self.logic.moveRight(); }
+      codes: [100, 39], // D, right arrow
+      apply: function(index) { playerAt(index).logic.moveRight(); }
     },
     moveDown: {
-      codes: [40, 115], // arrow down, S
-      apply: function() { self.logic.moveDown(); }
+      codes: [115, 40], // S arrow down
+      apply: function(index) { playerAt(index).logic.moveDown(); }
     },
     rotate: {
-      codes: [38, 119], // arrow up, W
-      apply: function() { self.logic.rotate(); }
+      codes: [119, 38], // W, arrow up
+      apply: function(index) { playerAt(index).logic.rotate(); }
     }
   };
 
@@ -37,9 +47,10 @@ function Controls(logic, graphics) {
     });
     if (action) {
       e.preventDefault();
-      action.apply();
+      var index = action.codes.indexOf(key);
+      action.apply(index);
       setTimeout(function() {
-          self.graphics.renderState(self.logic.state());
+          playerAt(index).graphics.renderState(playerAt(index).logic.state());
         }, 0);
     }
    };

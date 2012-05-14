@@ -1,5 +1,5 @@
 //Raphael paper to act as playground, width and height in number of Blocks
-function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previewRows, previewColumns) {
+function TetrisGraphic(canvasRows, canvasColumns, fieldId) {
   this.blockSet = undefined;
   this.colorMap =
   {
@@ -25,20 +25,22 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
       0: "img/orange.png", 1: "img/red.png", 2: "img/yellow.png", 3: "img/green.png", 4: "img/gray.png", 5: "img/purple.png", 6: "img/blue.png"
     }
   };
-  this.canvas = new TetrisWindow(canvasName, canvasRows, canvasColumns);
+  this.fieldId = fieldId;
+  this.canvasName = fieldId + "_canvas";
+  this.canvas = new TetrisWindow(this.canvasName, canvasRows, canvasColumns);
+  this.previewName = fieldId + "_preview";
   this.preview = null;
-  this.previewName = previewName;
   this.currentTheme = "level_0";
 
   var self = this;
 
 
   this.render = function(state) {
-    this.highlightLines(state.clearedLines);
+    //this.highlightLines(state.clearedLines);
     this.renderState(state);
-    this.renderPanel("score", state.score);
-    this.renderPanel("lines", state.clearedLinesTotal);
-    this.renderPanel("level", state.level);
+    this.renderPanel("#" + fieldId + " .scores", state.score);
+    this.renderPanel("#" + fieldId + " .lines", state.clearedLinesTotal);
+    this.renderPanel("#" + fieldId + " .level", state.level);
     this.switchLevelTheme(state.level);
 
   }
@@ -131,7 +133,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
 
   this.renderPanel = function(name, val) {
     var str = val.toString();
-    var container = $('#' + name);
+    var container = $(name);
     var childrenCount = container.children().length - 1;
     var missingLeadingZeros = childrenCount - str.length;
     _.each(_.range(missingLeadingZeros), function() {
@@ -210,7 +212,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
   this.switchLevelTheme = function(level) {
     var newTheme = "level_" + level.toString();
     if (newTheme != this.currentTheme) {
-      $("." + this.currentTheme).switchClass(this.currentTheme, newTheme, 1000);
+      $("#" + this.fieldId + " ." + this.currentTheme).switchClass(this.currentTheme, newTheme, 1000);
 
       this.currentTheme = newTheme;
     }
@@ -219,7 +221,7 @@ function TetrisGraphic(canvasName, canvasRows, canvasColumns, previewName, previ
 }
 
 function TetrisWindow(canvasName, xCount, yCount) {
-  var canvasElement = $("#" + canvasName);
+  var canvasElement = $("#"+canvasName);
 
   this.canvas = Raphael(canvasName, canvasElement.width(), canvasElement.height());
   this.xCount = xCount;

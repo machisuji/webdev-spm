@@ -15,33 +15,61 @@
 
   <title>Tetris</title>
  </head>
- <body class="level_0" onload="tetris = new Tetris('canvas', 'preview');">
+ <body class="level_0" onload="tetris = new Tetris();">
+  <div id="menu">
+    <div class="title">T&auml;tris</div>
+    <button id="start-one-player">1 player</button><br/>
+    <button id="start-two-players">2 players</button>
+  </div>
   <div id="main">
-    <div id="canvas" class="glow"></div>
-    <div id="preview" class="glow level_0"></div>
-    <div id="panel">
-      <div id="score" class="panel">
-        <div class="level_0 headline"></div>
-        <div class="glow score level_0 zero"></div>
-        <div class="glow score level_0 zero"></div>
-        <div class="glow score level_0 zero"></div>
-        <div class="glow score level_0 zero"></div>
+    <div id="player1">
+      <div id="player1_canvas" class="canvas glow"></div>
+      <div id="player1_preview" class="preview glow level_0"></div>
+      <div class="panel_frame">
+        <div class="scores panel">
+          <div class="level_0 headline"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+        </div>
+        <div class="lines panel">
+          <div class="level_0 headline"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+        </div>
+        <div class="level panel">
+          <div class="level_0 headline"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+        </div>
       </div>
-      <div id="lines" class="panel">
-        <div class="level_0 headline"></div>
-        <div class="glow score level_0 zero"></div>
-        <div class="glow score level_0 zero"></div>
-        <div class="glow score level_0 zero"></div>
-      </div>
-      <div id="level" class="panel">
-        <div class="level_0 headline"></div>
-        <div class="glow score level_0 zero"></div>
-        <div class="glow score level_0 zero"></div>
+    </div>
+    <div id="player2">
+      <div id="player2_canvas" class="canvas glow"></div>
+      <div id="player2_preview" class="preview glow level_0"></div>
+      <div class="panel_frame">
+        <div class="scores panel">
+          <div class="level_0 headline"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+        </div>
+        <div class="lines panel">
+          <div class="level_0 headline"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+        </div>
+        <div class="level panel">
+          <div class="level_0 headline"></div>
+          <div class="glow score level_0 zero"></div>
+          <div class="glow score level_0 zero"></div>
+        </div>
       </div>
     </div>
   </div>
-
-
-
  </body>
 </html>

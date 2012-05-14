@@ -1,3 +1,6 @@
+Editor
+------
+* multi columns view
 
 JavaScript
 ----------
