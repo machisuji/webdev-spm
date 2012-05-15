@@ -65,6 +65,10 @@ function TetrisLogic(width, height) {
       ret.preview = self.nextPiece.blocks();
     }
 
+    if(self.lastClearedRows.length > 1){
+      self.addLinesToOthers(self.lastClearedRows.length-1);
+    }
+
     return ret;
   };
 
@@ -91,6 +95,7 @@ function TetrisLogic(width, height) {
 
       self.spawn();
     } else {
+      self.lastClearedRows = [];
       self.activePiece.y += 1;
     }
     return true;
@@ -126,6 +131,17 @@ function TetrisLogic(width, height) {
       }
     });
   };
+
+  this.enemies = [];
+  this.addEnemie = function addEnemie(enemie) { self.enemies.push(enemie); };
+  this.addLinesToOthers = function addLinesToOthers(clearedRows) {
+    _.each(self.enemies, function (enemie) {
+        enemie.addLines(clearedRows);
+    });
+  }
+  this.addLines = function addLines(count) {
+    this.grid.addLines(count);
+  }
 }
 
 function Grid(width, height) {
@@ -214,6 +230,25 @@ function Grid(width, height) {
       }
     }
     return crows;
+  };
+  this.addLines = function addLines(count) {
+    //TODO: add check if lines reach top
+    console.log(count);
+    for (var y = 0; y < self.height-count; ++y) {
+      self.blocks[y] = self.blocks[y+count];
+    }
+    for (y = self.height-count; y < self.height; ++y) {
+      console.log(y);
+      self.blocks[y] = new Array(self.width);
+      for (var x = 0; x < width; ++x) {
+        //self.blocks[y][x] = Empty;
+        var type = Math.floor(Math.random() * 6);
+        self.blocks[y][x] = new Piece({type: type});
+      }
+      var emptyIndex = Math.floor(Math.random() * (self.width-1));
+      console.log("index: "+emptyIndex);
+      self.blocks[y][emptyIndex] = Empty;
+    }
   };
 }
 

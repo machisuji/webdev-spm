@@ -30,9 +30,18 @@ function Tetris(players) {
 }
 
 function Player(name, fieldId, nr) {
+  var self = this;
   this.logic = new TetrisLogic(10, 20);
   this.graphics = new TetrisGraphic(10, 20, fieldId);
   this.name = name;
+
+  this.enemie = function enemie(enemie) {
+    self.logic.addEnemie(enemie);
+    enemie.logic.addEnemie(self);
+  };
+  this.addLines = function addLines(count) {
+      self.logic.addLines(count);
+  };
 }
 
 //x,y are int positions, type is an int specifying the color of the block
@@ -66,8 +75,10 @@ $(document).ready(function() {
     $("#player1").show();
     $("#player2").show();
 
-    tetris = new Tetris([new Player("Player 1", "player1", 0),
-      new Player("Player 2", "player2", 1)]);
+    var p1 = new Player("Player 1", "player1", 0);
+    var p2 = new Player("Player 2", "player2", 1);
+    p1.enemie(p2);
+    tetris = new Tetris([p1, p2]);
     setTimeout(tetris.start, 0);
   });
 });
