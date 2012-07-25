@@ -59,6 +59,13 @@
 {[\textsc{TODO}]}%
 {[\textsc{TODO:} #1]}%
 }
+% \needcite command
+\newcommand{\needcite}[1][EMPTY]{%
+\null\marginnote[$\rightarrow$]{$\leftarrow$}%
+\ifthenelse{\equal{#1}{EMPTY}}%
+{[\textsc{citation needed}]}%
+{[\textsc{citation needed from} #1]}%
+}
 
 % packed lists
 \newenvironment{packed_enumerate}{
