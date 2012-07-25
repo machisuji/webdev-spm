@@ -12,9 +12,9 @@ Thus using a repository as we were used to beforehand was the only way of having
 
 Actually we wanted to recognize the doings of other team member during development, e.g.:
 \begin{itemize}
-	\item Is another team member working on the same project as well?
-	\item At what file is the team member working?
-	\item At what exactly does the team member is working at?
+    \item Is another team member working on the same project as well?
+    \item At what file is the team member working?
+    \item At what exactly does the team member is working at?
 \end{itemize}
 Further we wanted to be albe to communicate with a team member.
 For this all wasn't supported by cloud9 this was one extension we planned to implement.
@@ -32,20 +32,36 @@ If the project is linked to a github~\needcite or bitbucket~\needcite repository
 
 \subsection{Proper git integration}
 As we stated in~\needcite[somewhere in motivation] two of us already knew git and developed several projects using git.
+Both are used to use the console to execute git commands.
+(Whereas for scolling the repository history or branches they prefer a graphical tool.)
+Therefore it was unsurprisingly that developers have to use the console in cloud9 as well.
+Unfortunately the cloud9 client console is not powerful enough to support the git workflow we are used to.
+Neither \texttt{git status} nor \texttt{git diff} is displayed in color.
+Therefore it is very hard to get information from the console output.
+Further the console is not interactive which includes that \texttt{git add --patch} is not working.
+Developer use this command to seperate semantically different code in seperate commits.
+
+One of us did not use git beforehand.
+So the whole process of using git is not familiar to him.
+He has to learn all the git commands and gets no help from cloud9.
+With the non-colored output given it is even harder to understand the mechanics of git.
+For git beginners it would be easier to get familiar with git if they get support from their coding environment.
+As for a cloud9 extension we want to extend the user interface: 
+Visual entities should enable the execution of common git commands.
+Additionally git output should be visualized with color and immediately.
+
+In sum the extension should integrate a proper git workflow and facilitate first steps into git.
+To further improve the development workflow we want to avoid switching back and forth between code editor and console completely.
+Additionally we want to track code changes and visualize them while development in the editor.
+
+\subsection{The selection}
+\todo[need proper title]
+
+collaboration is already in development, to be released in about 3 weeks
+proper repository integration is more important to us than issue-tracking
+
+mention version control systems in general, esp. git
 
 
-\begin{itemize}
-	\item our 3 approaches, and what we have choosen
-	\item mention version control systems in general, git
-\end{itemize}
 
-
-Collaboration was to be released in about 3 weeks
-IDE-based Issue-Tracking
-	Measure time and assign to tickets
-	Automatically create tickets while coding
-Proper git integration in editor / IDE
-	Work without console
-	Visualize changes
-	(Branches, History, Tags, …)
 
