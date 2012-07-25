@@ -7,6 +7,8 @@
 \usepackage{pifont}	%ding
 \usepackage[usenames,dvipsnames]{color}	%text color
 \usepackage{amssymb, amsmath}
+\usepackage{ifthen}
+\usepackage{marginnote}
 
 %define JavaScript listing:
 \definecolor{lightgray}{rgb}{.9,.9,.9}
@@ -52,7 +54,6 @@
   \setcounter{dingdistance}{191}}
 
 % \todo command
-\usepackage{marginnote}
 \newcommand{\todo}[1][EMPTY]{%
 \null\marginnote[$\rightarrow$]{$\leftarrow$}%
 \ifthenelse{\equal{#1}{EMPTY}}%
