@@ -10,7 +10,7 @@ At the moment we started our project there was no possibilty to add team members
 The collaboration in cloud9 was restricted to collaboration with the aid of a git~\needcite or mercurial~\needcite repository.
 Thus using a repository as we were used to beforehand was the only way of having collaboration.
 
-Actually we wanted to recognize the doings of other team member during development, e.g.
+Actually we wanted to recognize the doings of other team member during development, e.g.:
 \begin{itemize}
 	\item Is another team member working on the same project as well?
 	\item At what file is the team member working?
@@ -20,7 +20,17 @@ Further we wanted to be albe to communicate with a team member.
 For this all wasn't supported by cloud9 this was one extension we planned to implement.
 
 \subsection{IDE-based Issue-Tracking}
+Not only during the development of our sample application also during our every day development we wished to be supported by automatic issue tracking.
+For this extension two different aspects were important for us.
+On the one hand we wanted to know how long we've worked on which file.
+So this extension would have to track the focus time of files and, if possible, in a more fine-grained level what methods or the like were edited in the file.
+On the other hand we wanted automatic issue creation.
+As for that we wanted to recognize if the developer annotated any code with e.g. \texttt{TODO}, \texttt{FIXME} or \texttt{BUG} and automatically create issues.
+Therefore this extension would include an issue tracker for cloud9.
+If the project is linked to a github~\needcite or bitbucket~\needcite repository the repective issue tracking api of either of them should be used to create corresponding issues there as well.
 
+\subsection{Proper git integration}
+As we stated in~\needcite[somewhere in motivation] 
 
 \begin{itemize}
 	\item our 3 approaches, and what we have choosen
