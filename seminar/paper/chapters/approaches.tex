@@ -37,8 +37,8 @@ Both are used to use the console to execute git commands.
 Therefore it was unsurprisingly that developers have to use the console in cloud9 as well.
 Unfortunately the cloud9 client console is not powerful enough to support the git workflow we are used to.
 Neither \texttt{git status} nor \texttt{git diff} is displayed in color.
-Therefore it is very hard to get information from the console output.
-Further the console is not interactive which includes that \texttt{git add --patch} is not working.
+Therefore it is very hard to get information from the console output as shown in figure~\ref{fig:diff_output}.
+Further the console is not interactive which includes that large output (from e.g. \texttt{git diff}) will be displayed at once glutting developers and \texttt{git add --patch} is not even working.
 Developer use this command to seperate semantically different code in seperate commits.
 
 One of us did not use git beforehand.
@@ -54,13 +54,28 @@ In sum the extension should integrate a proper git workflow and facilitate first
 To further improve the development workflow we want to avoid switching back and forth between code editor and console completely.
 Additionally we want to track code changes and visualize them while development in the editor.
 
+\begin{figure}
+   \centering
+   \includegraphics[width=0.9\textwidth]{images/diff_output.png}
+   \caption{On both consoles is a part of \texttt{git diff} command output.
+   The left side shows the cloud9 console and the right side shows a unix bash console.
+   With the aid of color it is much easier to get information from this output.}
+   \label{fig:diff_output}
+\end{figure}
+
+
 \subsection{The selection}
 \todo[need proper title]
 
-collaboration is already in development, to be released in about 3 weeks
-proper repository integration is more important to us than issue-tracking
+The collaboration extension of cloud9 is already in development and is to be released in about 3 weeks.
+Further we hope to develop an extension that might be integrated into the main cloud9 project.
+Because of that we choose to not implement the collaboration extension in yet another way.
 
-mention version control systems in general, esp. git
+We feel that proper repository integration is needed in almost all projects e.g. due to the need of history and backups.
+Whereas there might be less projects needing issue-tracking e.g. a very small project.
+That is why we choose to implement an extension that enables cloud9 to support users with proper git integration and helps git beginners to start with git.
+
+\todo[mention version control systems in general, esp. git (?)]
 
 
 
