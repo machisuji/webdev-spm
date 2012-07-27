@@ -38,9 +38,9 @@ At the top~\circnum{2} the unstaged changes and at the bottom~\circnum{3} the st
 Double clicking on a file will open its changes in the editor.
 Deleted or added lines will be marked with a red or green backgound and line numbers are displayed in two columns.
 The left column shows the line number in the old file and the right column shows the line number in the new file.
-For each single chunk there is a small menu with according options~\circnum{4}.
-This is either to \emph{discard} or \emph{stage} unstaged chunks or \emph{unstage} staged chunks.
-As soon as all belonging together chunks are staged developers can type summarizing message and click the commit button~\circnum{5}.
+For each single hunk there is a small menu with according options~\circnum{4}.
+This is either to \emph{discard} or \emph{stage} unstaged hunks or \emph{unstage} staged hunks.
+As soon as all belonging together hunks are staged developers can type summarizing message and click the commit button~\circnum{5}.
 To pull and push from the git repository we provide context menu entries~\circnum{6}.
 
 \begin{figure}
@@ -52,11 +52,18 @@ To pull and push from the git repository we provide context menu entries~\circnu
 
 \subsection{Improvement}
 With our extension developers get realtime feedback of \texttt{git diff} of the current opened file while editing it.
-There is no need to switch back and forth
-comparison to earlier editing way, mention history extension (and why we have choosen not to implement stage etc buttons here)
-comparison to earlier diffing, committing
+This is visualized in a similiar way as stated in section~\ref{subsec:IntelliJ_IDEA}.
+But we decided to not put buttons in our tooltip but to show the older content.
+On the one hand because of the history extension (figure~\ref{fig:history}) enabling to discard changes.
+On the other hand we figured out that mostly changes are scattered within one file or often over several files and thus buttons to stage and unstage hunks might not be that useful in a editor.
+As a result there is no longer a need to switch back and forth from editor to console as we had before (see section~\needcite{our workflow}).
 
-comparison to related work
+Once a developer decides to commit his changes he can switch via click or keyboard shortcut to our diff view.
+Here it is possible to rapidly execute a bunch of git commands by simply clicking on certain buttons.
+This replaces the missing interactive console to stage seperate code hunks and to only view a snippet of a diff.
+Further we colorized changed lines as proposed in section~\ref{subsec:ext_git_integration} and~\ref{subsec:gitx}.
+
+\todo[anything forgotten???]
 
 \subsection{Implementation}
 In the following subsections we will describe how we implemented our extension.
