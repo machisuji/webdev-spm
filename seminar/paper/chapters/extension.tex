@@ -1,23 +1,23 @@
 \section{gitc extension}
 \label{sec:Extension}
-In this section we describe how a cloud9 user can work with our extension and we show how the developing workflow is improved by it.
-Further we compare our extension to other tools introduced in section~\needcite{related work}.
-Finally we will explain how we intregrated our extension to cloud9 and how we implemented it.
+In this section we describe how a Cloud9 user can work with our extension and we show how the developing workflow is improved by it.
+Furthermore we compare our extension to other tools introduced in section ~\ref{sec:Related_Work}.
+Finally we will explain how we intregrated our extension to Cloud9 and how we implemented it.
 
 \subsection{gitc User Interface}
 \label{sec:gitc_ui}
-\paragraph{The editor adjustments} of our extension will promt the cloud9 user immediately with visiual feedback of source code changes.
-That means while typing within the editor makers will appear next to the left grutter line as can be seen in figure~\ref{fig:editor}.
+\paragraph{The editor adjustments} of our extension will promt the Cloud9 user immediately with visiual feedback of source code changes.
+That means while typing within the editor markers will appear next to the left gutter line as can be seen in figure~\ref{fig:editor}.
 
 The changes show the staged and unstaged changes of the git repository respectively.
-We choose to display those both types of changes as colored markers whereas the already staged changes are more transparent.
-In the upper screenshot of the cloud9 editor are only unstaged changes displayed.
+We chose to display those both types of changes as colored markers whereas the already staged changes are more transparent.
+In the upper screenshot of the cloud9 editor only unstaged changes are displayed.
 The lower screenshot shows that the state of the git repository is changed.
 Some of the changes are staged and at~\circnum{2} and~\circnum{3} are some (new) unstaged changes.
 So in the line marked by~\circnum{2} there are both staged and unstaged changes visualized.
 The colors green, blue and red are used to visualize added~\circnum{3}, changed~\circnum{2} and deleted~\circnum{1} lines respectively.
 
-Furthermore the user will get tooltips hovering over one annotation.
+Furthermore the user will get tooltips hovering over an annotation.
 In this way deleted lines or the old content of changed lines will be displayed to the user.
 We do not provide buttons to stage, unstage or discard the changes because there is already an extension which allows developers to go back in history (see figure~\ref{fig:history}).
 As for the staging and unstaging we want to have an overview over all current changes and thus rather use the diff view than search in single source code files for changes.
@@ -41,7 +41,7 @@ Deleted or added lines will be marked with a red or green backgound and line num
 The left column shows the line number in the old file and the right column shows the line number in the new file.
 For each single hunk there is a small menu with according options~\circnum{4}.
 This is either to \emph{discard} or \emph{stage} unstaged hunks or \emph{unstage} staged hunks.
-As soon as all belonging together hunks are staged developers can type summarizing message and click the commit button~\circnum{5}.
+As soon as all associated hunks are staged developers can type a summarizing message and click the commit button~\circnum{5}.
 To pull and push from the git repository we provide context menu entries~\circnum{6}.
 
 \begin{figure}
@@ -55,7 +55,7 @@ To pull and push from the git repository we provide context menu entries~\circnu
 With our extension developers get realtime feedback of \texttt{git diff} of the current opened file while editing it.
 This is visualized in a similiar way as stated in section~\ref{subsec:IntelliJ_IDEA}.
 But we decided to not put buttons in our tooltip but to show the older content.
-On the one hand because of the history extension (figure~\ref{fig:history}) enabling to discard changes.
+On one hand because of the history extension (figure~\ref{fig:history}) enabling one to discard changes.
 On the other hand we figured out that mostly changes are scattered within one file or often over several files and thus buttons to stage and unstage hunks might not be that useful in a editor.
 As a result there is no longer a need to switch back and forth from editor to console as we had before (see section~\needcite{our workflow}).
 
@@ -64,17 +64,15 @@ Here it is possible to rapidly execute a bunch of git commands by simply clickin
 This replaces the missing interactive console to stage seperate code hunks and to only view a snippet of a diff.
 Further we colorized changed lines as proposed in section~\ref{subsec:ext_git_integration} and~\ref{subsec:gitx}.
 
-\todo[anything forgotten???]
-
 \subsection{Implementation}
-Cloud9 has a plug-in architecture.
+Cloud9 has a well thought out plug-in architecture.
 Therefore we implemented our gitc extension as a plug-in.
-Whereas there are examples how to implement a cloud9 plug-in we had difficulties finding further documentation for cloud9 internals as well as for cloud9 third party software.
-Thus we struggeled first finding out how to send git commands and later with the integration into the apf\footnote{\url{ace.ajax.org/api/}} and Ace editor.
+While there are examples on how to implement a Cloud9 plug-in we had difficulties finding further documentation for Cloud9 internals as well as for Cloud9 third party software.
+Thus we first struggeled finding out how to send git commands and later with the use of apf\footnote{\url{ace.ajax.org/api/}} and Ace editor.
 
 In the following subsections we will describe how we implemented our extension.
-First we will have a closer look at how we intregrated our extension to cloud9 and how we execute git commands.
-Then we will explain how we implemented the adjustments in the cloud9 editor and the new diff view.
+First we will have a closer look at how we intregrated our extension to Cloud9 and how we execute git commands.
+Then we will explain how we implemented the adjustments in the Cloud9 editor and the new diff view.
 
 \subsubsection{Sending git commands}
 %client-side, server-side hook
@@ -84,18 +82,18 @@ Then we will explain how we implemented the adjustments in the cloud9 editor and
 %following two are as well client-side
 
 To send git commands our plug-in has to register on client-side and server-side to the cloud9 ide.
-Thus we implemented a client-side interface that can send a command to the server-side, catch the resulted output and then call a callback, if given, with this output.
+We implemented a client-side interface that can send a command to the server-side, catch the resulted output and then call a callback, if given, with this output.
 As for that we have to give ids to those command to assign the output to the right callback.
 To then interpret that output we implemented a git diff parser as well. 
 
-On the server-side we filter all out gitc commands and spawn the rightful command as a shell process.
+On the server-side we filter all our gitc commands and spawn the according command as a shell process.
 To regocnize our commands we use an own channel for them.
 This additionally prevents other extensions reacting to our commands.
 If then output messages will be send via our channel we collect them and send them back to the client.
 
-Because we can only execute git commands on the server-side (which is caused by the Cloud9 architecture) there might be performance issues when the connection is not good enough.
+Because we can only execute git commands on the server-side (which is inherent to the Cloud9 architecture) there might be performance issues when the connection is not good enough.
 There are possible situations when it is not necessary to send a git command so we should improve our code at according places and save those commands.
-Further we wish to execute \texttt{git commit} when being offline.
+Furthermore we wish to execute \texttt{git commit} when being offline.
 Both issues might be solved by using git.js (see~\ref{sec:offline-git-support}).
 
 \subsubsection{Editor Adjustments}
@@ -105,11 +103,11 @@ Both issues might be solved by using git.js (see~\ref{sec:offline-git-support}).
 %registered events: document creation, tab switch, document change
 
 Once a document is opened or becomes active for the first time in the editor, its current workspace version is checked against the repository version. 
-For that purpose gitc registeres with the \texttt{documentCreate} and \texttt{tabSwitch} events emitted by the cloud9 ide. 
+For that purpose gitc registers with the \texttt{documentCreate} and \texttt{tabSwitch} events emitted by the Cloud9 ide. 
 Sending the command \texttt{git diff [--cached] -U0} to the client side gitc interface returns the unstaged [staged] differences between the two file versions, split into the various chunks. 
 Staged and unstaged changes for each document file are transformed into objects that we refer to as \texttt{annotations} and maintained in an array. Annotations are constantly updated as long as the user edits the document. 
 Once saved, the document is checked against the repository version again and the annotations array is refilled. 
-Ace provides \texttt{documentChange} and cloud9 ide \texttt{saveFile} events in order to keep track of change and save operations introduced to the document file. 
+Ace provides \texttt{documentChange} and Cloud9 ide \texttt{saveFile} events in order to keep track of change and save operations introduced to the document file. 
 In order to highlight code changes according to annotations, Ace stores various states related to a document in an \texttt{EditSession}, which provides a function \texttt{addMarker}. 
 A marker is a highlighted range of text or text background over one or more lines in the editing window. 
 In our implementation we make use of markers in order to produce the narrow bars at the left border of the window as already described in \ref{sec:gitc_ui}. 
