@@ -66,6 +66,11 @@ Further we colorized changed lines as proposed in section~\ref{subsec:ext_git_in
 \todo[anything forgotten???]
 
 \subsection{Implementation}
+Cloud9 has a plug-in architecture.
+Therefore we implemented our gitc extension as a plug-in.
+Whereas there are examples how to implement a cloud9 plug-in we had difficulties finding further documentation for cloud9 internals as well as for cloud9 third party software.
+Thus we struggeled first finding out how to send git commands and later with the integration into the apf\footnote{\url{ace.ajax.org/api/}} and Ace editor.
+
 In the following subsections we will describe how we implemented our extension.
 First we will have a closer look at how we intregrated our extension to cloud9 and how we execute git commands.
 Then we will explain how we implemented the adjustments in the cloud9 editor and the new diff view.
