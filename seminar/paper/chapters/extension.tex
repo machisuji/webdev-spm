@@ -4,7 +4,8 @@ In this section we describe how a cloud9 user can work with our extension and we
 Further we compare our extension to other tools introduced in section~\needcite{related work}.
 Finally we will explain how we intregrated our extension to cloud9 and how we implemented it.
 
-\subsection{Description}
+\subsection{Gitc User Interface}
+\label{sec:gitc_ui}
 \paragraph{The editor adjustments} of our extension will promt the cloud9 user immediately with visiual feedback of source code changes.
 That means while typing within the editor annotations will appear next to the left grutter line as can be seen in figure~\ref{fig:editor}.
 
@@ -52,7 +53,12 @@ Then we will explain how we implemented the adjustments in the cloud9 editor and
 %Stephi
 
 \subsubsection{Editor Adjustments}
-%Patrick
+%ask for git diffs when creating document
+%creating and storing annotations, unsaved changes
+%using ace api: markers
+%registered events: document creation, tab switch, document change
+
+Once a document is opened or becomes active for the first time in the editor, its current workspace version is checked against the repository version. For that purpose Gitc registered with the \texttt{documentCreate} and \texttt{tabSwitch} events emitted by the ACE editor. Sending the command \texttt{git diff [--cached] -U0} to the client side Gitc Interface returns the differences between the two file versions, split into the various chunks. Staged and unstaged changes for each document file are transformed into objects that we refer to as \texttt{annotations} and maintained in an array. Annotations are constantly updated as long as the user edits the document. Once saved, the document is checked against the repository version again and the annotations array is refilled. ACE provides \texttt{documentChange} and \texttt{saveFile} events in order to keep track of change and save operations introduced to the document file. In order to highlight code changes according to annotations, ACE stores various states related to a document in an \texttt{EditSession}, which provides a function \texttt{addMarker}. A marker is a highlighted range of text or text background over one or more lines in the editing window. In our implementation we make use of markers in order to produce the narrow bars at the left border of the window as already described in \ref{sec:gitc_ui}. Markers are created and updated every time a document is opened, saved or edited. Subscribing to the ACE event \texttt{mouseMove} enables hovering elements in the code window, which we use to create our tooltips that relate to code changes as in figure~\ref{fig:editor}.
 
 \subsubsection{Diff View}
 %Markus
