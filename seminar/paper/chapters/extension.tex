@@ -76,15 +76,27 @@ In the following subsections we will describe how we implemented our extension.
 First we will have a closer look at how we intregrated our extension to cloud9 and how we execute git commands.
 Then we will explain how we implemented the adjustments in the cloud9 editor and the new diff view.
 
-\subsubsection{Sending git command}
+\subsubsection{Sending git commands}
 %client-side, server-side hook
 %sending commands (channel)
 %reacting to commands
 %git parser
 %following two are as well client-side
 
-To send git commands plug-in has to register on client-side and server-side to the cloud9 ide.
+To send git commands our plug-in has to register on client-side and server-side to the cloud9 ide.
+Thus we implemented a client-side interface that can send a command to the server-side, catch the resulted output and then call a callback, if given, with this output.
+As for that we have to give ids to those command to assign the output to the right callback.
+To then interpret that output we implemented a git diff parser as well. 
 
+On the server-side we filter all out gitc commands and spawn the rightful command as a shell process.
+To regocnize our commands we use an own channel for them.
+This additionally prevents other extensions reacting to our commands.
+If then output messages will be send via our channel we collect them and send them back to the client.
+
+Because we can only execute git commands on the server-side (which is caused by the Cloud9 architecture) there might be performance issues when the connection is not good enough.
+There are possible situations when it is not necessary to send a git command so we should improve our code at according places and save those commands.
+Further we wish to execute \texttt{git commit} when being offline.
+Both issues might be solved by using git.js (see~\ref{sec:offline-git-support}).
 
 \subsubsection{Editor Adjustments}
 %ask for git diffs when creating document
