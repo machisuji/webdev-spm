@@ -4,8 +4,7 @@ In this section we describe how a cloud9 user can work with our extension and we
 Further we compare our extension to other tools introduced in section~\needcite{related work}.
 Finally we will explain how we intregrated our extension to cloud9 and how we implemented it.
 
-\subsection{Gitc User Interface}
-\label{sec:gitc_ui}
+\subsection{Description}
 \paragraph{The editor adjustments} of our extension will promt the cloud9 user immediately with visiual feedback of source code changes.
 That means while typing within the editor annotations will appear next to the left grutter line as can be seen in figure~\ref{fig:editor}.
 
@@ -29,8 +28,20 @@ As for the staging and unstaging we want to have an overview over all current ch
    \label{fig:editor}
 \end{figure}
 
-\paragraph{Using our diff view} the cloud9 developer has now a view to explore \texttt{git diff} visually.
-By clicking on the pane button \circnum{1} in figure~\needcite or simply using the keyboard shortcut \texttt{strg + g} or \texttt{cmd + g} ....
+\paragraph{Using our diff view} the cloud9 developer has now a view to explore \texttt{git diff} visually (see figure~\ref{fig:diff_view}).
+By clicking on the pane button~\circnum{1} or simply using the keyboard shortcut \texttt{strg + g} / \texttt{cmd + g} the diff view will be opened.
+The tree view at the left is filtered for changed files only.
+The icon of an item of the tree will indicate the change state.
+A green plus, a blue star and a red minus signify added, changed or deleted files respectively.
+At the top~\circnum{2} the unstaged changes and at the bottom~\circnum{3} the staged changes are listed.
+
+Double clicking on a file will open its changes in the editor.
+Deleted or added lines will be marked with a red or green backgound and line numbers are displayed in two columns.
+The left column shows the line number in the old file and the right column shows the line number in the new file.
+For each single hunk there is a small menu with according options~\circnum{4}.
+This is either to \emph{discard} or \emph{stage} unstaged hunks or \emph{unstage} staged hunks.
+As soon as all belonging together hunks are staged developers can type summarizing message and click the commit button~\circnum{5}.
+To pull and push from the git repository we provide context menu entries~\circnum{6}.
 
 \begin{figure}
    \centering
@@ -39,10 +50,20 @@ By clicking on the pane button \circnum{1} in figure~\needcite or simply using t
    \label{fig:diff_view}
 \end{figure}
 
-comparison to earlier editing way, mention history extension (and why we have choosen not to implement stage etc buttons here)
-comparison to earlier diffing, committing
+\subsection{Workflow Improvement}
+With our extension developers get realtime feedback of \texttt{git diff} of the current opened file while editing it.
+This is visualized in a similiar way as stated in section~\ref{subsec:IntelliJ_IDEA}.
+But we decided to not put buttons in our tooltip but to show the older content.
+On the one hand because of the history extension (figure~\ref{fig:history}) enabling to discard changes.
+On the other hand we figured out that mostly changes are scattered within one file or often over several files and thus buttons to stage and unstage hunks might not be that useful in a editor.
+As a result there is no longer a need to switch back and forth from editor to console as we had before (see section~\needcite{our workflow}).
 
-comparison to related work
+Once a developer decides to commit his changes he can switch via click or keyboard shortcut to our diff view.
+Here it is possible to rapidly execute a bunch of git commands by simply clicking on certain buttons.
+This replaces the missing interactive console to stage seperate code hunks and to only view a snippet of a diff.
+Further we colorized changed lines as proposed in section~\ref{subsec:ext_git_integration} and~\ref{subsec:gitx}.
+
+\todo[anything forgotten???]
 
 \subsection{Implementation}
 In the following subsections we will describe how we implemented our extension.
@@ -51,6 +72,11 @@ Then we will explain how we implemented the adjustments in the cloud9 editor and
 
 \subsubsection{Integration to cloud9}
 %Stephi
+client-side, server-side hook
+sending commands (channel)
+reacting to commands
+git parser
+following two are as well client-side
 
 \subsubsection{Editor Adjustments}
 %ask for git diffs when creating document
@@ -58,7 +84,17 @@ Then we will explain how we implemented the adjustments in the cloud9 editor and
 %using ace api: markers
 %registered events: document creation, tab switch, document change
 
-Once a document is opened or becomes active for the first time in the editor, its current workspace version is checked against the repository version. For that purpose Gitc registered with the \texttt{documentCreate} and \texttt{tabSwitch} events emitted by the ACE editor. Sending the command \texttt{git diff [--cached] -U0} to the client side Gitc Interface returns the differences between the two file versions, split into the various chunks. Staged and unstaged changes for each document file are transformed into objects that we refer to as \texttt{annotations} and maintained in an array. Annotations are constantly updated as long as the user edits the document. Once saved, the document is checked against the repository version again and the annotations array is refilled. ACE provides \texttt{documentChange} and \texttt{saveFile} events in order to keep track of change and save operations introduced to the document file. In order to highlight code changes according to annotations, ACE stores various states related to a document in an \texttt{EditSession}, which provides a function \texttt{addMarker}. A marker is a highlighted range of text or text background over one or more lines in the editing window. In our implementation we make use of markers in order to produce the narrow bars at the left border of the window as already described in \ref{sec:gitc_ui}. Markers are created and updated every time a document is opened, saved or edited. Subscribing to the ACE event \texttt{mouseMove} enables hovering elements in the code window, which we use to create our tooltips that relate to code changes as in figure~\ref{fig:editor}.
+Once a document is opened or becomes active for the first time in the editor, its current workspace version is checked against the repository version. 
+For that purpose Gitc registered with the \texttt{documentCreate} and \texttt{tabSwitch} events emitted by the ACE editor. 
+Sending the command \texttt{git diff [--cached] -U0} to the client side Gitc Interface returns the differences between the two file versions, split into the various chunks. 
+Staged and unstaged changes for each document file are transformed into objects that we refer to as \texttt{annotations} and maintained in an array. Annotations are constantly updated as long as the user edits the document. 
+Once saved, the document is checked against the repository version again and the annotations array is refilled. 
+ACE provides \texttt{documentChange} and \texttt{saveFile} events in order to keep track of change and save operations introduced to the document file. 
+In order to highlight code changes according to annotations, ACE stores various states related to a document in an \texttt{EditSession}, which provides a function \texttt{addMarker}. 
+A marker is a highlighted range of text or text background over one or more lines in the editing window. 
+In our implementation we make use of markers in order to produce the narrow bars at the left border of the window as already described in \ref{sec:gitc_ui}. 
+Markers are created and updated every time a document is opened, saved or edited. 
+Subscribing to the ACE event \texttt{mouseMove} enables hovering elements in the code window, which we use to create our tooltips that relate to code changes as in figure~\ref{fig:editor}.
 
 \subsubsection{Diff View}
 %Markus
