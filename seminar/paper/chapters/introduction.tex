@@ -34,7 +34,7 @@ The already almost ubiquitous existence of online code repositories and code sha
 GitHub\footnote{\url{https://github.com/}} let programmers backup their code and connect with others.
 However, the process of coding itself involves working locally - most often alone - and the use of multiple tools.
 
-Fortunately, the release of web-based development environments such as Lively Kernel~\ref{Ingalls2008LKS}
+Fortunately, the release of web-based development environments such as Lively Kernel~\cite{Ingalls2008LKS}
 has marked a big step in improving this process.
 It lets team members store their code in the cloud and therefore makes local workspace copies obsolete.
 No matter whether they work from their private notebooks or office desktop computers, their code will always be up to date,
@@ -45,20 +45,20 @@ Most obvious, a reliable internet connection is always needed, which, however, e
 Thus, a web application can be tested in a real world setting with no extra test server needed to be set up anymore.
 The idea of keeping everything in one browser window to get a more direct and quicker feedback on code changes is
 what Bret Victor refers to as an ``immediate connection'' in his talk ``Inventing on Principle'' given at
-CUSEC 2012~\ref{victor2012inventing} in Montreal.
+CUSEC 2012~\cite{victor2012inventing} in Montreal.
 
-In this paper, we present Gitc, a Cloud9 extension for visual realtime Git support which we developed as part of the
+In this paper, we present gitc, a Cloud9\footnote{https://c9.io/} extension for visual realtime git support which we developed as part of the
 summer term 2012 seminar ``Web-based Development Environments'' at Hasso-Plattner-Institute in Potsdam.
 Cloud9 is an online IDE written in NodeJS. Released in March 2011 it fully supports NodeJS and Javascript development
 while providing the programmer with syntax highlighting for many other programming languages.
 For the purpose of diving into the IDE we developed a Tetris clone.
 
 
-Chapter \ref{sec:Motivation} gives an overview of the features of Cloud9 and how it makes use of the
+Section~\ref{sec:Motivation} gives an overview of the features of Cloud9 and how it makes use of the
 previously mentioned advantages of a web-based development process.
-Based on our experiences with the IDE we point out possible extensions next to Gitc, that we think would improve
-the Cloud9 experience, followed by an overview of related work regarding Git support in other IDEs.
-In Chapter \ref{sec:Extension}, we provide technical insight into our implementation and outline the important
+Based on our experiences with the IDE we point out possible extensions next to gitc, that we think would improve
+the Cloud9 experience, followed by an overview of related work regarding git support in other IDEs.
+In section~\ref{sec:Extension}, we provide technical insight into our implementation and outline the important
 components to deal with when extending Cloud9.
-Finally, we encourage ideas for future work regarding Cloud9 and Gitc in Chapter \ref{sec:Future_Work} and
-evaluate the results of our work in Chapter \ref{sec:Conclusion}.
+Finally, we encourage ideas for future work regarding Cloud9 and gitc in section~\ref{sec:Future_Work} and
+evaluate the results of our work in section~\ref{sec:Conclusion}.
