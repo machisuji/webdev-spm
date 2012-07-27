@@ -6,11 +6,20 @@ Finally we will explain how we intregrated our extension to cloud9 and how we im
 
 \subsection{Description}
 \paragraph{The editor adjustments} of our extension will promt the cloud9 user immediately with visiual feedback of source code changes.
-That means while typing in the editor annotations will appear next to the left grutter line as can be seen in figure~\needcite ~\circnum{1}.
+That means while typing within the editor annotations will appear next to the left grutter line as can be seen in figure~\ref{fig:editor}.
 
-The changes show the staged and unstaged changes of the git repository.
-We choose to display both type of changes as colored annotations whereas the already staged changes are more transparent. \todo[Vgl. left right anntotation circnum]
-The color \textcolor{LimeGreen}{green} is used to visualize added, \textcolor{ProcessBlue}{blue} for changed and \textcolor{Red}{red} for deleted lines.
+The changes show the staged and unstaged changes of the git repository respectively.
+We choose to display those both types of changes as colored annotations whereas the already staged changes are more transparent.
+In the upper screenshot of the cloud9 editor are only unstaged changes displayed.
+The lower screenshot shows that the state of the git repository is changed.
+Some of the changes are staged and at~\circnum{2} and~\circnum{3} are some (new) unstaged changes.
+So in the line marked by~\circnum{2} there are both staged and unstaged changes visualized.
+The colors green, blue and red are used to visualize added~\circnum{3}, changed~\circnum{2} and deleted~\circnum{1} lines respectively.
+
+Furthermore the user will get tooltips hovering over one annotation.
+In this way deleted lines or the old content of changed lines will be displayed to the user.
+We do not provide buttons to stage, unstage or discard the changes because there is already an extension which allows developers to go back in history (see figure~\ref{fig:history}).
+As for the staging and unstaging we want to have an overview over all current changes and thus rather use the diff view than search in single source code files for changes.
 
 \begin{figure}
    \centering
@@ -19,11 +28,10 @@ The color \textcolor{LimeGreen}{green} is used to visualize added, \textcolor{Pr
    \label{fig:editor}
 \end{figure}
 
-comparison to earlier editing way, mention history extension (and why we have choosen not to implement stage etc buttons here)
-
 \paragraph{Using our diff view} the cloud9 developer can know ....
 By clicking on the pane button \circnum{1} in figure~\needcite or simply using the keyboard shortcut \texttt{strg + g} or \texttt{cmd + g} ....
 
+comparison to earlier editing way, mention history extension (and why we have choosen not to implement stage etc buttons here)
 comparison to earlier diffing, committing
 
 comparison to related work
