@@ -7,10 +7,10 @@ Finally we will explain how we intregrated our extension to cloud9 and how we im
 \subsection{gitc User Interface}
 \label{sec:gitc_ui}
 \paragraph{The editor adjustments} of our extension will promt the cloud9 user immediately with visiual feedback of source code changes.
-That means while typing within the editor annotations will appear next to the left grutter line as can be seen in figure~\ref{fig:editor}.
+That means while typing within the editor makers will appear next to the left grutter line as can be seen in figure~\ref{fig:editor}.
 
 The changes show the staged and unstaged changes of the git repository respectively.
-We choose to display those both types of changes as colored annotations whereas the already staged changes are more transparent.
+We choose to display those both types of changes as colored markers whereas the already staged changes are more transparent.
 In the upper screenshot of the cloud9 editor are only unstaged changes displayed.
 The lower screenshot shows that the state of the git repository is changed.
 Some of the changes are staged and at~\circnum{2} and~\circnum{3} are some (new) unstaged changes.
@@ -76,13 +76,15 @@ In the following subsections we will describe how we implemented our extension.
 First we will have a closer look at how we intregrated our extension to cloud9 and how we execute git commands.
 Then we will explain how we implemented the adjustments in the cloud9 editor and the new diff view.
 
-\subsubsection{Integration to cloud9}
-%Stephi
-client-side, server-side hook
-sending commands (channel)
-reacting to commands
-git parser
-following two are as well client-side
+\subsubsection{Sending git command}
+%client-side, server-side hook
+%sending commands (channel)
+%reacting to commands
+%git parser
+%following two are as well client-side
+
+To send git commands plug-in has to register on client-side and server-side to the cloud9 ide.
+
 
 \subsubsection{Editor Adjustments}
 %ask for git diffs when creating document
@@ -91,11 +93,11 @@ following two are as well client-side
 %registered events: document creation, tab switch, document change
 
 Once a document is opened or becomes active for the first time in the editor, its current workspace version is checked against the repository version. 
-For that purpose Gitc registered with the \texttt{documentCreate} and \texttt{tabSwitch} events emitted by the Ace editor. 
-Sending the command \texttt{git diff [--cached] -U0} to the client side Gitc Interface returns the differences between the two file versions, split into the various chunks. 
+For that purpose gitc registeres with the \texttt{documentCreate} and \texttt{tabSwitch} events emitted by the cloud9 ide. 
+Sending the command \texttt{git diff [--cached] -U0} to the client side gitc interface returns the unstaged [staged] differences between the two file versions, split into the various chunks. 
 Staged and unstaged changes for each document file are transformed into objects that we refer to as \texttt{annotations} and maintained in an array. Annotations are constantly updated as long as the user edits the document. 
 Once saved, the document is checked against the repository version again and the annotations array is refilled. 
-Ace provides \texttt{documentChange} and \texttt{saveFile} events in order to keep track of change and save operations introduced to the document file. 
+Ace provides \texttt{documentChange} and cloud9 ide \texttt{saveFile} events in order to keep track of change and save operations introduced to the document file. 
 In order to highlight code changes according to annotations, Ace stores various states related to a document in an \texttt{EditSession}, which provides a function \texttt{addMarker}. 
 A marker is a highlighted range of text or text background over one or more lines in the editing window. 
 In our implementation we make use of markers in order to produce the narrow bars at the left border of the window as already described in \ref{sec:gitc_ui}. 
