@@ -105,4 +105,15 @@ Markers are created and updated every time a document is opened, saved or edited
 Subscribing to the Ace event \texttt{mouseMove} enables hovering elements in the code window, which we use to create our tooltips that relate to code changes as in figure~\ref{fig:editor}.
 
 \subsubsection{Diff View}
-%Markus
+
+Pressing Cmd + G opens the gitc panel which shows the current changes as shown in figure ~\ref{fig:diff_view}.
+Cloud9 uses APF\footnote{Ajax.org Application Platform - http://ui.ajax.org/#home} as the basis for the whole application.
+Defining the gitc panel involves putting together an xml markup (AML) file describing the UI.
+There is documentation\footnote{http://ui.ajax.org/#docs} which helps you build your markup to get the desired UI.
+However, there is a lack of examples showing how to actuallly use the UI elements. Things such as processing a click of button
+or how to fill and change a tree.
+In the end we still managed to implement everything we wanted through experimentation and looking through the code of the core
+and other plugins.
+
+For the display of the actual diff inside the editor we had to resort to overriding the editor's update function to be able to
+render our own gutter with custom line numbers as required by the diff.
