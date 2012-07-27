@@ -28,8 +28,20 @@ As for the staging and unstaging we want to have an overview over all current ch
    \label{fig:editor}
 \end{figure}
 
-\paragraph{Using our diff view} the cloud9 developer has now a view to explore \texttt{git diff} visually.
-By clicking on the pane button \circnum{1} in figure~\needcite or simply using the keyboard shortcut \texttt{strg + g} or \texttt{cmd + g} ....
+\paragraph{Using our diff view} the cloud9 developer has now a view to explore \texttt{git diff} visually (see figure~\ref{fig:diff_view}).
+By clicking on the pane button~\circnum{1} or simply using the keyboard shortcut \texttt{strg + g} / \texttt{cmd + g} the diff view will be opened.
+The tree view at the left is filtered for changed files only.
+The icon of an item of the tree will indicate the change state.
+A green plus, a blue star and a red minus signify added, changed or deleted files respectively.
+At the top~\circnum{2} the unstaged changes and at the bottom~\circnum{3} the staged changes are listed.
+
+Double clicking on a file will open its changes in the editor.
+Deleted or added lines will be marked with a red or green backgound and line numbers are displayed in two columns.
+The left column shows the line number in the old file and the right column shows the line number in the new file.
+For each single chunk there is a small menu with according options~\circnum{4}.
+This is either to \emph{discard} or \emph{stage} unstaged chunks or \emph{unstage} staged chunks.
+As soon as all belonging together chunks are staged developers can type summarizing message and click the commit button~\circnum{5}.
+To pull and push from the git repository we provide context menu entries~\circnum{6}.
 
 \begin{figure}
    \centering
@@ -38,6 +50,9 @@ By clicking on the pane button \circnum{1} in figure~\needcite or simply using t
    \label{fig:diff_view}
 \end{figure}
 
+\subsection{Improvement}
+With our extension developers get realtime feedback of \texttt{git diff} of the current opened file while editing it.
+There is no need to switch back and forth
 comparison to earlier editing way, mention history extension (and why we have choosen not to implement stage etc buttons here)
 comparison to earlier diffing, committing
 
