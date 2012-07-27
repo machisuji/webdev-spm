@@ -5,33 +5,31 @@ While we are quite satisfied with the features we managed to implement in the gi
 there is more to be done to make the git integration perfect.
 Most importantly the \emph{history view}, but also:
 \begin{itemize}
-	\item changing branches
+	\item switching branches
 	\item checking out specific tags/commits
-	\item word diff in tooltips
 \end{itemize}
-An otional but potentially very useful feature would be \emph{offline} git support.
+An optional but potentially very useful feature would be \emph{offline} git support.
 
 \subsection{History View}
 \label{sec:history-view}
 
-About the git history view ...
+For completion gitc should also feature the history view shown in figure ~\ref{fig:gitx-history}.
+This would not necessarily have to look just as in gitx.
 
-\subsection{Branches}
+\subsection{Branches and checkout out specific tags and commits}
 \label{sec:branches}
 
-Regarding those branches ...
-
-\subsection{Checking out specific tags and commits}
-\label{sec:checkout}
-
-Blah blah blah, yada yada yada
-
-\subsection{Word iff in tooltips}
-\label{sec:word-diff}
-
-Word!
+Currently \emph{gitc} does not support branches. Creating branches as well as checking out branches,
+commits etc. still requires the use of the Cloud9 console. It would be desirable to be able to do all
+this over the \emph{gitc} view.
 
 \subsection{Offline git support}
 \label{sec:offline-git-support}
+
+There is one major restriction while working with git through Cloud9. It does not work offline since everything goes through the Cloud9 server-side component.
+Usually this would not be a problem, however it is one of the key points of git that you can work with it (committing etc.)
+while offline.
+It would be very useful if you could still do at least some things while offline.
+Perhaps one could realize that through Dan Lucraft's git implementation in pure Javascript which we could possibly run on the client side to do local commits for example.
 
 Reference: https://github.com/danlucraft/git.js
